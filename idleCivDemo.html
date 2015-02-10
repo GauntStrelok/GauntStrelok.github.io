@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+<style>
+.butt {
+    border: 1px outset blue;
+    background-color: lightBlue;
+    height:60px;
+    width:60px;
+    cursor:pointer;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 20px; 
+}
+
+.butt:hover {
+   background-color: blue;
+    color:white;
+}
+</style>
+
+
+</head>
+
+
+
+<body>
+
+<div id="items" style="width:50%;float:left"></div>
+
+<div id="resources" style="width:50%;float:right"></div>
+
+
+</body>
+
+<script>
+
+	var MANAGER = {};
+	MANAGER.quantity = 1;
+	
+	var items = {};
+	
+	var resources = {
+		money: 100,
+	};
+	
+	function init(){
+	
+		keyDownEventsInit();
+		
+		$("#resources").html("money: <label id='cantidadmoney'>0</label>");
+	
+		var html = ""
+		
+	
+		var itemPromptName = prompt("Please enter item name, or press cancel to exit the item creator","");
+		var itemPromptPrice = prompt("Please enter initial price item","");
+		var itemPromptIncrement = prompt("Please enter increment like \" 1.05  \" that will increase the price of the item  ","");
+		var itemPromptResource = prompt("Please enter the name of the resource this item will create, it can be other item too","money");
+		while(itemPromptName != null){
+			items[itemPromptName] = {
+				nombre: itemPromptName,
+				price: itemPromptPrice,
+				increment: itemPromptIncrement,
+				resource: itemPromptResource,
+				quantity: 0,
+				updateHtml : function(){
+					$("#"+ this.nombre +"").text(this.nombre+": "+this.quantity);
+					$("#"+ this.nombre +"Price").text(this.price*MANAGER.quantity);
+				}
+			}
+			html+="<div class='butt' onclick='buyItem(\"" + itemPromptName +"\", "+ MANAGER.quantity +")'><label id=" + itemPromptName + ">"+ itemPromptName +"</label><br/><label id='" + itemPromptName + "Price'>"+ itemPromptPrice +"</label><br/><label>"+ itemPromptResource +"</label></div><br/>"
+		
+			
+		
+			itemPromptName = prompt("Please enter item name, or press cancel to exit the item creator","");
+			itemPromptPrice = prompt("Please enter initial price item","");
+			itemPromptIncrement = prompt("Please enter increment like \" 1.05  \" that will increase the price of the item  ","");
+			itemPromptResource = prompt("Please enter the name of the resource this item will create, it can be other item too","money");
+		}
+		$("#items").html(html);
+		//runFunctions();
+		var cualc = setInterval(function(){ runFunctions()}, 1000);
+		//prompt("test",JSON.stringify(items));
+	
+	}
+	
+	
+
+	var runFunctions = function(){
+		for(var propertyName in items) {
+			if(items[items[propertyName].resource] != null){
+				items[items[propertyName].resource].quantity += items[propertyName].quantity;
+			}else{
+				if(resources[items[propertyName].resource] != null && resources[items[propertyName].resource]>=0 ){
+					resources[items[propertyName].resource] += items[propertyName].quantity;
+					$("#cantidad"+items[propertyName].resource).html(resources[items[propertyName].resource]);
+				}else{
+					resources[items[propertyName].resource] = items[propertyName].quantity;
+					var resourcesDiv = $("#resources");
+					resourcesDiv.html(resourcesDiv.html()+""+items[propertyName].resource+": <label id='cantidad"+ items[propertyName].resource +"'>"+items[propertyName].quantity+"</label>");
+				}
+			}
+		}
+		
+		for(var propertyName in items) {
+			items[propertyName].updateHtml();
+		}
+		
+	}
+	
+	function updateItems(){
+		for(var propertyName in items) {
+			items[propertyName].updateHtml();
+		}
+	}
+	
+	
+	
+	function keyDownEventsInit(){
+		var eventHandler = {};
+		eventHandler.keyAllowed = {};
+		
+
+		$(document).keydown(function(e) {
+			if (eventHandler.keyAllowed [e.which] === false) return;
+			eventHandler.keyAllowed [e.which] = false;
+			if(e.which == 17 ){
+				MANAGER.quantity*=100;
+				updateItems();
+				return;
+			}
+			if(e.which == 16){
+				MANAGER.quantity*=10;
+				updateItems();
+				return;
+			}
+		});
+
+		$(document).keyup(function(e) { 
+		  eventHandler.keyAllowed [e.which] = true;
+		  if(e.which == 17 ){
+				MANAGER.quantity/=100;
+				updateItems();
+				return;
+			}
+			if(e.which == 16){
+				MANAGER.quantity/=10;
+				updateItems();
+				return;
+			}
+		});
+
+		$(document).focus(function(e) { 
+		  eventHandler.keyAllowed = {};
+		});
+		
+	}
+	
+	var buyItem = function(name,quantity){
+		if(resources.money >= items[name].price*quantity){
+			resources.money -= items[name].price*quantity;
+			items[name].quantity += quantity;
+			
+			for(i=1;i <= quantity;i++){
+				items[name].price *= items[name].increment;
+				items[name].price = Math.floor(items[name].price);
+				
+			}
+			items[name].updateHtml();
+		}else{
+			console.log("no puedo");
+		}
+		
+	}
+	setTimeout(function(){ init();}, 5000);
+	
+</script>
+
+</html>
