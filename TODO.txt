@@ -23,7 +23,7 @@ eventos aleatorios DEFINIR (en todo caso, antes de cada run vas a tener un ciert
 achievment con bonuses por cada achievment o por la cantidad de achievments obtenidos. DEFINIR
 
 cache o local storage, usariamos la misma tecnologia que cookie clicker para guardar el ultimo juego guardado.
-(se me ocurre usar un sistema de backup)
+(se me ocurre usar un sistema de backup
 
 
 -----------------------------OTROS-----------------------------------
@@ -37,6 +37,13 @@ infoWindow para achievments o otras cosas, lo pongo en otros porque estaria buen
 formulario de ingreso de edificios con el fin de simplificar las cosas(si puede estar dentro de un infowindow MEJOR)
 
 eventhandler(ya esta hecho en parte lo del shift y ctrl)
+
+notacion de los numeros para evitar numeros super largos(y, tambien para no tener limite en los numeros)
+
+
+botones lindos
+http://jsfiddle.net/mrgebwmu/
+http://www.sanwebe.com/2014/02/css3-buttons-examples-with-effects-animations
 
 
 
@@ -53,3 +60,6 @@ minijuegos3(algun mapa onda warband para mover tus tropas y conquistar castillos
 minijuegos4(tambien como onda warband )
 
 miinijuegos5 quiero un pong
+
+
+
