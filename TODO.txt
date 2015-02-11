@@ -1,0 +1,55 @@
+Idle Civ Demo TODO / analisis
+
+Current features(?) 
+se pueden agregar items con un precio inicial, un incremento y el recurso que producen
+
+control sobre shift y ctrl para cambiar la cantidad de cosas compradas y el precio(aun no esta implementada la compra)
+
+
+---- TODO  GAME ----
+
+Estructuras que buildeen mas de 1 recurso, y que, consecuentemente, puedan construirse con mas de un recurso(alguna idea es armar un array de produccion y precio) 1d
+
+Indicacion de un recurso/s inicial/es 1h
+
+Recursos que necesitan para funcionar, por ejemplo no se pueden construir  casas sin madera. 1h
+
+desactivado y activado de edificios que utilicen recursos1h (deberia ser una propiedad con un if)
+
+Upgrades varios(nada definido) DEFINIR
+
+eventos aleatorios DEFINIR (en todo caso, antes de cada run vas a tener un cierto chance de que ocurra algo)
+
+achievment con bonuses por cada achievment o por la cantidad de achievments obtenidos. DEFINIR
+
+cache o local storage, usariamos la misma tecnologia que cookie clicker para guardar el ultimo juego guardado.
+(se me ocurre usar un sistema de backup)
+
+
+-----------------------------OTROS-----------------------------------
+
+Control de lenguaje: utilizar el "MANAGER.language.textWriteAName"
+http://stackoverflow.com/questions/228835/best-practice-javascript-and-multilanguage (la segunda respuesta) also search for i18n javascript
+
+
+infoWindow para achievments o otras cosas, lo pongo en otros porque estaria bueno hacerla
+
+formulario de ingreso de edificios con el fin de simplificar las cosas(si puede estar dentro de un infowindow MEJOR)
+
+eventhandler(ya esta hecho en parte lo del shift y ctrl)
+
+
+
+--------------------------------------------- after 1.0 -----------------------------------------------
+
+//probablemente mas alla de 1.0 estos seran cosas custom propias
+
+minijuegos(se me ocurre alguna especie de dungeon rpg dinamico)
+
+minijuegos2(se me ocurre algo especial donde puedas crear ejercitos and shit)
+
+minijuegos3(algun mapa onda warband para mover tus tropas y conquistar castillos y ciudades seleccionados)
+
+minijuegos4(tambien como onda warband )
+
+miinijuegos5 quiero un pong
