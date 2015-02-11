@@ -158,6 +158,12 @@ var MANAGER = {};
 		
 		for(var propertyName in items[name].price) { //another for each to reduce the resources spent into the buying
 				resources[propertyName] -= items[name].price[propertyName].quantity*quantity;
+				for(i=1;i <= quantity;i++){ //for each item bought increment the price of the item based on the factor, i have to search a mathematical way of doing this FASTER
+					items[name].price[propertyName].quantity *= items[name].increment; 
+					items[name].price[propertyName].quantity = Math.floor(items[name].price[propertyName].quantity);
+				}
+				
+				
 		}
 		items[name].quantity += quantity; //add the boughts items
 		
