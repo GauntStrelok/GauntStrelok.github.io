@@ -17,10 +17,10 @@ var MANAGER = {};
 		
 	
 		var itemPromptName = prompt("Please enter item name, or press cancel to exit the item creator","Name");
-		var itemPromptPrice = prompt("Please enter initial price item by using name:quantity;otherName:otherQuantity","money:50");
+		while(itemPromptName != null){ //this while keeps recording as far as theitem ca build another resource, we have to think about some help here for the user input
+			var itemPromptPrice = prompt("Please enter initial price item by using name:quantity;otherName:otherQuantity","money:50");
 		var itemPromptIncrement = prompt("Please enter increment like \" 1.05  \" that will increase the price of the item  ","1.05");
 		var itemPromptResource = prompt("Please enter the name of the resource this item will create, it can be other item too; then enter a comma \",\" and then enter the amount of that resource. Press enter, you will be asked to input another resource if you want, to stop this process click cancel","money,10");
-		while(itemPromptName != null){ //this while keeps recording as far as theitem ca build another resource, we have to think about some help here for the user input
 			var itemResources = [];
 			while (itemPromptResource != null){
 				datos = itemPromptResource.split(',');//beside each resource separated in some inputs, also its separated for the quantity with a comma
@@ -53,10 +53,7 @@ var MANAGER = {};
 		
 			
 		
-			itemPromptName = prompt("Please enter item name, or press cancel to exit the item creator","");
-			itemPromptPrice = prompt("Please enter initial price item","");
-			itemPromptIncrement = prompt("Please enter increment like \" 1.05  \" that will increase the price of the item  ","");
-			itemPromptResource = prompt("Please enter the name of the resource this item will create, it can be other item too","money");
+			itemPromptName = prompt("Please enter item name, or press cancel to exit the item creator","Name");
 		}
 		$("#items").html(html);
 		//runFunctions();
