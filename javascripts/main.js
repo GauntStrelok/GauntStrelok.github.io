@@ -16,10 +16,10 @@ var MANAGER = {};
 		var html = ""
 		
 	
-		var itemPromptName = prompt("Please enter item name, or press cancel to exit the item creator","");
-		var itemPromptPrice = prompt("Please enter initial price item by using name:quantity;otherName:otherQuantity","");
-		var itemPromptIncrement = prompt("Please enter increment like \" 1.05  \" that will increase the price of the item  ","");
-		var itemPromptResource = prompt("Please enter the name of the resource this item will create, it can be other item too; then enter a comma \",\" and then enter the amount of that resource. Press enter, you will be asked to input another resource if you want, to stop this process click cancel","money");
+		var itemPromptName = prompt("Please enter item name, or press cancel to exit the item creator","Name");
+		var itemPromptPrice = prompt("Please enter initial price item by using name:quantity;otherName:otherQuantity","money:50");
+		var itemPromptIncrement = prompt("Please enter increment like \" 1.05  \" that will increase the price of the item  ","1.05");
+		var itemPromptResource = prompt("Please enter the name of the resource this item will create, it can be other item too; then enter a comma \",\" and then enter the amount of that resource. Press enter, you will be asked to input another resource if you want, to stop this process click cancel","money,10");
 		while(itemPromptName != null){ //this while keeps recording as far as theitem ca build another resource, we have to think about some help here for the user input
 			var itemResources = [];
 			while (itemPromptResource != null){
@@ -49,7 +49,7 @@ var MANAGER = {};
 					$("#"+ this.nombre +"Price").text(priceToString(this.price,MANAGER.quantity));   //cancelled as problems with html, better to be aside of this
 				}
 			}
-			html+="<div class='butt' onclick='buyItem(\"" + itemPromptName +"\", "+ MANAGER.quantity +")'><label id=" + itemPromptName + ">"+ itemPromptName +"</label><br/><label id='" + itemPromptName + "Price'>"+ priceToString(itemPrices); +"</label><br/><label>"+ JSON.stringify(itemResources) +"</label></div><br/>"
+			html+="<div class='butt' onclick='buyItem(\"" + itemPromptName +"\", "+ MANAGER.quantity +")'><label id=" + itemPromptName + ">"+ itemPromptName +"</label><br/><label id='" + itemPromptName + "Price'>"+ priceToString(itemPrices) +"</label><br/><label>"+ resourcesToString(itemResources) +"</label></div>";
 		
 			
 		
@@ -106,12 +106,12 @@ var MANAGER = {};
 	
 	
 	
-	function keyDownEventsInit(){
+	function keyDownEventsInit(){ //eventhandler
 		var eventHandler = {};
 		eventHandler.keyAllowed = {};
 		
 
-		$(document).keydown(function(e) {
+		$(document).keydown(function(e) { //se dispara cuando toco una tecla, por ahora solo agarra el 16 y el 17 control y shift respectivamente. posee un control para saber cuando lo tiene apretado y cuando lo suelta, asi la funcionalidad no se dispara multiples veces
 			if (eventHandler.keyAllowed [e.which] === false) return;
 			eventHandler.keyAllowed [e.which] = false;
 			if(e.which == 17 ){
@@ -126,7 +126,7 @@ var MANAGER = {};
 			}
 		});
 
-		$(document).keyup(function(e) { 
+		$(document).keyup(function(e) { //chequea cuando se suelta la tecla.
 		  eventHandler.keyAllowed [e.which] = true;
 		  if(e.which == 17 ){
 				MANAGER.quantity/=100;
@@ -158,6 +158,7 @@ var MANAGER = {};
 		
 		for(var propertyName in items[name].price) { //another for each to reduce the resources spent into the buying
 				resources[propertyName] -= items[name].price[propertyName].quantity*quantity;
+				updateResource(propertyName);
 				for(i=1;i <= quantity;i++){ //for each item bought increment the price of the item based on the factor, i have to search a mathematical way of doing this FASTER
 					items[name].price[propertyName].quantity *= items[name].increment; 
 					items[name].price[propertyName].quantity = Math.floor(items[name].price[propertyName].quantity);
@@ -177,7 +178,20 @@ var MANAGER = {};
 				priceString+= propertyName+": "+itemPrices[propertyName].quantity*quantity+", "; 
 				
 		}
-		return priceString;
+		return priceString.substring(0, priceString.length - 2);
 	}
+	
+	function resourcesToString(resources){
+		var resourcesString = "";
+		for (index = 0; index < resources.length; ++index) { //for each resource
+			resourcesString += ""+resources[index].resource+": "+resources[index].quantity+", ";
+		}
+		return resourcesString.substring(0, resourcesString.length - 2);
+	}
+	
+	function updateResource(resourceName){//update given resource html
+		$("#cantidad"+resourceName).html(resources[resourceName]);
+	}
+	
 
 	setTimeout(function(){ init();}, 5000);
