@@ -46,10 +46,10 @@ var MANAGER = {};
 				quantity: 0,
 				updateHtml : function(){
 					$("#"+ this.nombre +"").text(this.nombre+": "+this.quantity);
-					//$("#"+ this.nombre +"Price").text(this.price*MANAGER.quantity);   //cancelled as problems with html, better to be aside of this
+					$("#"+ this.nombre +"Price").text(priceToString(this.price,MANAGER.quantity));   //cancelled as problems with html, better to be aside of this
 				}
 			}
-			html+="<div class='butt' onclick='buyItem(\"" + itemPromptName +"\", "+ MANAGER.quantity +")'><label id=" + itemPromptName + ">"+ itemPromptName +"</label><br/><label id='" + itemPromptName + "Price'>"+ itemPromptPrice +"</label><br/><label>"+ JSON.stringify(itemResources) +"</label></div><br/>"
+			html+="<div class='butt' onclick='buyItem(\"" + itemPromptName +"\", "+ MANAGER.quantity +")'><label id=" + itemPromptName + ">"+ itemPromptName +"</label><br/><label id='" + itemPromptName + "Price'>"+ priceToString(itemPrices); +"</label><br/><label>"+ JSON.stringify(itemResources) +"</label></div><br/>"
 		
 			
 		
@@ -166,12 +166,18 @@ var MANAGER = {};
 				
 		}
 		items[name].quantity += quantity; //add the boughts items
-		
-		for(i=1;i <= quantity;i++){ //for each item bought increment the price of the item based on the factor, i have to search a mathematical way of doing this FASTER
-			//items[name].price *= items[name].increment; 
-			//items[name].price = Math.floor(items[name].price);
-		}
 		items[name].updateHtml();
 		
 	}
+
+
+	function priceToString(itemPrices,quantity){
+		var priceString = "";
+		for(var propertyName in itemPrices) { //a for each to take each one of this and transform it into a readeable string
+				priceString+= propertyName+": "+itemPrices[propertyName].quantity*quantity+", "; 
+				
+		}
+		return priceString;
+	}
+
 	setTimeout(function(){ init();}, 5000);
