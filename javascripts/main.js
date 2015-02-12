@@ -3,15 +3,13 @@ var MANAGER = {};
 	
 	var items = {};
 	
-	var resources = {
-		money: 100,
-	};
+	var resources = {};
 	
 	function init(){
 	
 		keyDownEventsInit();
 		
-		$("#resources").html("money: <label id='cantidadmoney'>0</label>");
+		
 	
 		var html = ""
 		
@@ -46,7 +44,7 @@ var MANAGER = {};
 				quantity: 0,
 				updateHtml : function(){
 					$("#"+ this.nombre +"").text(this.nombre+": "+this.quantity);
-					$("#"+ this.nombre +"Price").text(priceToString(this.price,MANAGER.quantity));   //cancelled as problems with html, better to be aside of this
+					$("#"+ this.nombre +"Price").text(priceToString(this.price,MANAGER.quantity));   //check viability
 				}
 			}
 			html+="<div class='butt' onclick='buyItem(\"" + itemPromptName +"\", "+ MANAGER.quantity +")'><label id=" + itemPromptName + ">"+ itemPromptName +"</label><br/><label id='" + itemPromptName + "Price'>"+ priceToString(itemPrices) +"</label><br/><label>"+ resourcesToString(itemResources) +"</label></div>";
@@ -57,6 +55,18 @@ var MANAGER = {};
 		}
 		$("#items").html(html);
 		//runFunctions();
+		x = 1;
+		var initialResourcePrompt = prompt("Please enter your number "+ x +" initial resource NAME in this game, press cancel to exit","");
+		while (initialResourcePrompt != null){
+			initialResourceQuantityPrompt = prompt("Please enter your number "+ x +" initial resource QUANTITY in this game, press cancel to exit","");
+
+			resources[initialResourcePrompt]  = parseInt(initialResourceQuantityPrompt);
+
+
+			$("#resources").html($("#resources").html()+"  -  "+ initialResourcePrompt +": <label id='cantidad"+ initialResourcePrompt +"'>"+ initialResourceQuantityPrompt +"</label>");
+			x++;
+			initialResourcePrompt = prompt("Please enter your number "+ x +" initial resource in this game, press cancel to exit","");
+		}
 		var cualc = setInterval(function(){ runFunctions()}, 1000);
 		//prompt("test",JSON.stringify(items));
 	

@@ -8,7 +8,7 @@ control sobre shift y ctrl para cambiar la cantidad de cosas compradas y el prec
 
 ---- TODO  GAME ----
 
-Estructuras que buildeen mas de 1 recurso, y que, consecuentemente, puedan construirse con mas de un recurso(alguna idea es armar un array de produccion y precio) 1d
+Estructuras que buildeen mas de 1 recurso, y que, consecuentemente, puedan construirse con mas de un recurso(alguna idea es armar un array de produccion y precio) READY
 
 Indicacion de un recurso/s inicial/es 1h
 
