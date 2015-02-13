@@ -5,6 +5,8 @@ var MANAGER = {};
 	
 	var resources = {};
 	
+	var upgrades = {};
+	
 	function init(){
 	
 		keyDownEventsInit();
@@ -67,6 +69,12 @@ var MANAGER = {};
 			x++;
 			initialResourcePrompt = prompt("Please enter your number "+ x +" initial resource in this game, press cancel to exit","");
 		}
+		
+		var upgradesPrompt = prompt('add your wanted upgrades : [{"name":"upgrade1","affects":"Casa","increase":"1.2","augments":"4"},{"name":"upgrade2","affects":"Casa","increase":"1.1","augments":"5"}]','[{"name":"upgrade1","affects":"Casa","increase":"1.2","augments":"4"},{"name":"upgrade2","affects":"Casa","increase":"1.1","augments":"5"}]');
+		upgradesArray = $.parseJSON(upgradesPrompt);
+		//[{name:"upgrade1",affects:"Casa",increase:1.2,augments:4,cost:{money:50,tierra:10}},{name:"upgrade2",affects:"Casa",increase:1.1,augments:5,cost:{money:50,tierra:10}}]
+		
+		
 		var cualc = setInterval(function(){ runFunctions()}, 1000);
 		//prompt("test",JSON.stringify(items));
 	
