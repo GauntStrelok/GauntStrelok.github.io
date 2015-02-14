@@ -46,10 +46,10 @@ var MANAGER = {};
 				quantity: 0,
 				updateHtml : function(){
 					$("#"+ this.nombre +"").text(this.nombre+": "+this.quantity);
-					$("#"+ this.nombre +"Price").text(priceToString(this.price,MANAGER.quantity));   //check viability
+					$("#"+ this.nombre +"Price").text(priceToString(this.price,MANAGER.quantity,this.increment));   //check viability
 				}
 			}
-			html+="<div class='butt' onclick='buyItem(\"" + itemPromptName +"\", "+ MANAGER.quantity +")'><label id=" + itemPromptName + ">"+ itemPromptName +"</label><br/><label id='" + itemPromptName + "Price'>"+ priceToString(itemPrices) +"</label><br/><label>"+ resourcesToString(itemResources) +"</label></div>";
+			html+="<div class='butt' onclick='buyItem(\"" + itemPromptName +"\", "+ MANAGER.quantity +")'><label id=" + itemPromptName + ">"+ itemPromptName +"</label><br/><label id='" + itemPromptName + "Price'>"+ priceToString(itemPrices,1,1) +"</label><br/><label>"+ resourcesToString(itemResources) +"</label></div>";
 		
 			
 		
@@ -70,8 +70,8 @@ var MANAGER = {};
 			initialResourcePrompt = prompt("Please enter your number "+ x +" initial resource in this game, press cancel to exit","");
 		}
 		
-		var upgradesPrompt = prompt('add your wanted upgrades : [{"name":"upgrade1","affects":"Casa","increase":"1.2","augments":"4"},{"name":"upgrade2","affects":"Casa","increase":"1.1","augments":"5"}]','[{"name":"upgrade1","affects":"Casa","increase":"1.2","augments":"4"},{"name":"upgrade2","affects":"Casa","increase":"1.1","augments":"5"}]');
-		upgradesArray = $.parseJSON(upgradesPrompt);
+		//var upgradesPrompt = prompt('add your wanted upgrades : [{"name":"upgrade1","affects":"Casa","increase":"1.2","augments":"4"},{"name":"upgrade2","affects":"Casa","increase":"1.1","augments":"5"}]','[{"name":"upgrade1","affects":"Casa","increase":"1.2","augments":"4"},{"name":"upgrade2","affects":"Casa","increase":"1.1","augments":"5"}]');
+		//upgradesArray = $.parseJSON(upgradesPrompt);
 		//[{name:"upgrade1",affects:"Casa",increase:1.2,augments:4,cost:{money:50,tierra:10}},{name:"upgrade2",affects:"Casa",increase:1.1,augments:5,cost:{money:50,tierra:10}}]
 		
 		
@@ -172,12 +172,15 @@ var MANAGER = {};
 		}
 		
 		for(var propertyName in items[name].price) { //another for each to reduce the resources spent into the buying
-				resources[propertyName] -= items[name].price[propertyName].quantity*quantity;
+				resources[propertyName] -= Math.floor(items[name].price[propertyName].quantity*(Math.pow(items[name].increment,quantity)-1)/(items[name].increment-1));
 				updateResource(propertyName);
+				/*
 				for(i=1;i <= quantity;i++){ //for each item bought increment the price of the item based on the factor, i have to search a mathematical way of doing this FASTER
 					items[name].price[propertyName].quantity *= items[name].increment; 
 					items[name].price[propertyName].quantity = Math.floor(items[name].price[propertyName].quantity);
 				}
+				*/
+				items[name].price[propertyName].quantity *= Math.floor(Math.pow(items[name].increment,quantity));
 				
 				
 		}
@@ -187,10 +190,10 @@ var MANAGER = {};
 	}
 
 
-	function priceToString(itemPrices,quantity){
+	function priceToString(itemPrices,quantity,increment){
 		var priceString = "";
 		for(var propertyName in itemPrices) { //a for each to take each one of this and transform it into a readeable string
-				priceString+= propertyName+": "+itemPrices[propertyName].quantity*quantity+", "; 
+				priceString+= propertyName+": "+Math.floor(itemPrices[propertyName].quantity*(Math.pow(increment,quantity)-1)/(increment-1))+", "; 
 				
 		}
 		return priceString.substring(0, priceString.length - 2);
