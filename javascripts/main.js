@@ -1,5 +1,6 @@
 var MANAGER = {};
 	MANAGER.quantity = 1;
+	MANAGER.itemsHtml = "";
 	
 	var items = {};
 	
@@ -11,51 +12,56 @@ var MANAGER = {};
 	
 		keyDownEventsInit();
 		
-		
-	
-		var html = ""
-		
-	
-		var itemPromptName = prompt("Please enter item name, or press cancel to exit the item creator","Name");
-		while(itemPromptName != null){ //this while keeps recording as far as theitem ca build another resource, we have to think about some help here for the user input
-			var itemPromptPrice = prompt("Please enter initial price item by using name:quantity;otherName:otherQuantity","money:50");
-		var itemPromptIncrement = prompt("Please enter increment like \" 1.05  \" that will increase the price of the item  ","1.05");
-		var itemPromptResource = prompt("Please enter the name of the resource this item will create, it can be other item too; then enter a comma \",\" and then enter the amount of that resource. Press enter, you will be asked to input another resource if you want, to stop this process click cancel","money,10");
-			var itemResources = [];
-			while (itemPromptResource != null){
-				datos = itemPromptResource.split(',');//beside each resource separated in some inputs, also its separated for the quantity with a comma
-				
-				itemResources.push({resource:datos[0],quantity:datos[1]});
-				itemPromptResource = prompt("Please enter the name of the resource this item will create, it can be other item too; then enter a comma \",\" and then enter the amount of that resource. Press enter, you will be asked to input another resource if you want, to stop this process click cancel","money");
-			}
-			var itemPrices = {}; //for the multiple item prices go here, maybe i have to base it like the resources in a multiple input based, but for now its name:quantity;othername:quantity2;name3:quantity3
-			resourceType = itemPromptPrice.split(';');//first split the pair of name:quantity
-			
-			for (index = 0; index < resourceType.length; ++index) {
-				priceResourceQuantity = resourceType[index].split(':');//then splits the name:quantity, to get the name and the quantity, i will use this later
-				itemPrices[priceResourceQuantity[0]] = {};
-				itemPrices[priceResourceQuantity[0]].quantity = priceResourceQuantity[1];  //i will use an strategy to get the resource and the name later in the buying on the item, i will let the html for later, that it will be hard with this multiprice based
-			}
-			
-			
-			items[itemPromptName] = {
-				nombre: itemPromptName,
-				price: itemPrices,
-				increment: itemPromptIncrement,
-				resource: itemResources,
+
+		itemName = $("");
+		$("#submitItem").click(function(){
+			itemName = $("#inputItemName").val();
+
+			itemPrice = {};
+			$(".initialPriceResource").each(function(){
+				itemPrice[$(this).val()] = {};
+				itemPrice[$(this).val()].quantity = $(this).siblings().val();
+			})
+
+			itemIncrement = $("#inputItemIcrement").val();
+
+			itemProduction = [];
+			$(".itemProduction").each(function(){
+				itemProduction.push({resource:$(this).val(),quantity:$(this).siblings().val()});
+			})
+
+			items[itemName] = {
+				name: itemName,
+				price: itemPrice,
+				increment: itemIncrement,
+				resource: itemProduction,
 				quantity: 0,
 				updateHtml : function(){
-					$("#"+ this.nombre +"").text(this.nombre+": "+this.quantity);
-					$("#"+ this.nombre +"Price").text(priceToString(this.price,MANAGER.quantity,this.increment));   //check viability
+					$("#"+ this.name +"").text(this.name+": "+this.quantity);
+					$("#"+ this.name +"Price").text(priceToString(this.price,MANAGER.quantity,this.increment));   //check viability
 				}
 			}
-			html+="<div class='butt' onclick='buyItem(\"" + itemPromptName +"\", "+ MANAGER.quantity +")'><label id=" + itemPromptName + ">"+ itemPromptName +"</label><br/><label id='" + itemPromptName + "Price'>"+ priceToString(itemPrices,1,1) +"</label><br/><label>"+ resourcesToString(itemResources) +"</label></div>";
+			MANAGER.itemsHtml+="<div class='butt' onclick='buyItem(\"" + itemName +"\", "+ MANAGER.quantity +")'><label id=" + itemName + ">"+ itemName +"</label><br/><label id='" + itemName + "Price'>"+ priceToString(itemPrice,1,1) +"</label><br/><label>"+ productionToString(itemProduction) +"</label></div>";
 		
-			
+
+
+		//$("#items").html(html);
+
+			alert(JSON.stringify(items));
+			}
+		);
+
+
+
+
+
+
+
+
+
+
+
 		
-			itemPromptName = prompt("Please enter item name, or press cancel to exit the item creator","Name");
-		}
-		$("#items").html(html);
 		//runFunctions();
 		x = 1;
 		var initialResourcePrompt = prompt("Please enter your number "+ x +" initial resource NAME in this game, press cancel to exit","");
@@ -180,7 +186,7 @@ var MANAGER = {};
 					items[name].price[propertyName].quantity = Math.floor(items[name].price[propertyName].quantity);
 				}
 				*/
-				items[name].price[propertyName].quantity *= Math.floor(Math.pow(items[name].increment,quantity));
+				items[name].price[propertyName].quantity = Math.floor(items[name].price[propertyName].quantity*Math.pow(items[name].increment,quantity));
 				
 				
 		}
@@ -199,7 +205,7 @@ var MANAGER = {};
 		return priceString.substring(0, priceString.length - 2);
 	}
 	
-	function resourcesToString(resources){
+	function productionToString(resources){
 		var resourcesString = "";
 		for (index = 0; index < resources.length; ++index) { //for each resource
 			resourcesString += ""+resources[index].resource+": "+resources[index].quantity+", ";
