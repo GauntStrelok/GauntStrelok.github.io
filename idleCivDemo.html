@@ -48,6 +48,10 @@
        background-color: blue;
         color:white;
     }
+
+    .itemDescriptionLabel{
+        margin-bottom:0px;
+    }
     </style>
 
 
@@ -107,7 +111,7 @@
                         </div>
 
                         <!-- Text input-->
-                        <div>
+                        <div id="initialPrices">
                             <div class="control-group">
                               <label class="control-label">Precio inicial</label>
                               <div class="controls">
@@ -133,12 +137,14 @@
                         </div>
                         <br>
                         <!-- Text input-->
-                        <div class="control-group">
-                          <label class="control-label" >Produccion</label>
-                          <div class="controls">
-                            <input type="text" placeholder="Tipo de recurso o item" class="input-xlarge itemProduction">
-                            <input type="text" placeholder="Cantidad" class="input-xlarge">
-                          </div>
+                        <div id="productions">
+                            <div class="control-group">
+                              <label class="control-label" >Produccion</label>
+                              <div class="controls">
+                                <input type="text" placeholder="Tipo de recurso o item" class="input-xlarge itemProduction">
+                                <input type="text" placeholder="Cantidad" class="input-xlarge">
+                              </div>
+                            </div>
                         </div>
 
                         <div class="control-group">

@@ -8,13 +8,11 @@ control sobre shift y ctrl para cambiar la cantidad de cosas compradas y el prec
 
 ---- TODO  GAME ----
 
-poner los formularios en vez de prompts 1D sabado!!
+poner los formularios en vez de prompts 1D sabado!!(martes not yet)!!
 
-Estructuras que buildeen mas de 1 recurso, y que, consecuentemente, puedan construirse con mas de un recurso(alguna idea es armar un array de produccion y precio) READY
+Indicacion de un recurso/s inicial/es READY(completado pero no, rehacerlo con el formulario)
 
-Indicacion de un recurso/s inicial/es READY
-
-Recursos que necesitan para funcionar, por ejemplo no se pueden construir  casas sin madera. 1h
+Recursos que necesitan para funcionar, por ejemplo una constructora no puede construir  casas sin madera. 1h
 
 desactivado y activado de edificios que utilicen recursos1h (deberia ser una propiedad con un if)
 
@@ -25,7 +23,7 @@ eventos aleatorios DEFINIR (en todo caso, antes de cada run vas a tener un ciert
 achievment con bonuses por cada achievment o por la cantidad de achievments obtenidos. DEFINIR
 
 cache o local storage, usariamos la misma tecnologia que cookie clicker para guardar el ultimo juego guardado.
-(se me ocurre usar un sistema de backup
+(se me ocurre usar un sistema de backup)
 
 
 -----------------------------OTROS-----------------------------------
@@ -34,7 +32,7 @@ Control de lenguaje: utilizar el "MANAGER.language.textWriteAName"
 http://stackoverflow.com/questions/228835/best-practice-javascript-and-multilanguage (la segunda respuesta) also search for i18n javascript
 
 
-infoWindow para achievments o otras cosas, lo pongo en otros porque estaria bueno hacerla
+infoWindow para achievments u otras cosas, lo pongo en otros porque estaria bueno hacerla
 
 formulario de ingreso de edificios con el fin de simplificar las cosas(si puede estar dentro de un infowindow MEJOR)
 

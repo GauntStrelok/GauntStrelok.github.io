@@ -1,6 +1,8 @@
 var MANAGER = {};
 	MANAGER.quantity = 1;
 	MANAGER.itemsHtml = "";
+	MANAGER.initialPricesHtml = "";
+	MANAGER.initialProductionHtml = "";
 	
 	var items = {};
 	
@@ -9,11 +11,15 @@ var MANAGER = {};
 	var upgrades = {};
 	
 	function init(){
+
+		MANAGER.initialPricesHtml = $("#initialPrices").html();
+		MANAGER.initialProductionHtml = $("#productions").html();
 	
 		keyDownEventsInit();
 		
 
 		itemName = $("");
+		//Submit the item construction TODO refresh inputs not refreshed
 		$("#submitItem").click(function(){
 			itemName = $("#inputItemName").val();
 
@@ -21,14 +27,14 @@ var MANAGER = {};
 			$(".initialPriceResource").each(function(){
 				itemPrice[$(this).val()] = {};
 				itemPrice[$(this).val()].quantity = $(this).siblings().val();
-			})
+			});
 
 			itemIncrement = $("#inputItemIcrement").val();
 
 			itemProduction = [];
 			$(".itemProduction").each(function(){
 				itemProduction.push({resource:$(this).val(),quantity:$(this).siblings().val()});
-			})
+			});
 
 			items[itemName] = {
 				name: itemName,
@@ -41,25 +47,42 @@ var MANAGER = {};
 					$("#"+ this.name +"Price").text(priceToString(this.price,MANAGER.quantity,this.increment));   //check viability
 				}
 			}
-			MANAGER.itemsHtml+="<div class='butt' onclick='buyItem(\"" + itemName +"\", "+ MANAGER.quantity +")'><label id=" + itemName + ">"+ itemName +"</label><br/><label id='" + itemName + "Price'>"+ priceToString(itemPrice,1,1) +"</label><br/><label>"+ productionToString(itemProduction) +"</label></div>";
+			MANAGER.itemsHtml+="<div class='butt' onclick='buyItem(\"" + itemName +"\", "+ MANAGER.quantity +")'><label class='itemDescriptionLabel' id=" + itemName + ">"+ itemName +"</label><label class='itemDescriptionLabel' id='" + itemName + "Price'>"+ priceToString(itemPrice,1,1) +"</label><label class='itemDescriptionLabel' >"+ productionToString(itemProduction) +"</label></div>";
 		
 
-
-		//$("#items").html(html);
-
-			alert(JSON.stringify(items));
+			$("#items").html(MANAGER.itemsHtml);
+			for(var propertyName in items) {
+				items[propertyName].updateHtml();
 			}
-		);
+			$("#initialPrices").html(MANAGER.initialPricesHtml);
+			$("#productions").html(MANAGER.initialProductionHtml);
+		});
 
+		//$("#submitItem").click(function(){});
 
+		//add cost item with an append
+		$("#addInitialPrice").click(function(){
+			stringPrice = 	'<div class="control-group">'+
+		                      '<label class="control-label"></label>'+
+		                      '<div class="controls">'+
+		                        '<input type="text" placeholder="Tipo de recurso" class="input-xlarge initialPriceResource"> '+
+		                        '<input type="text" placeholder="Cantidad" class="input-xlarge">'+
+		                      '</div>'+
+		                    '</div>';
+			$("#initialPrices").append(stringPrice);
+		});
 
-
-
-
-
-
-
-
+		//add production item with an append
+		$("#addProduction").click(function(){
+			stringProdution ='	<div class="control-group">'+
+	                              '<label class="control-label" ></label>'+
+	                              '<div class="controls">'+
+	                                '<input type="text" placeholder="Tipo de recurso o item" class="input-xlarge itemProduction"> '+
+	                                '<input type="text" placeholder="Cantidad" class="input-xlarge">'+
+	                              '</div>'+
+	                            '</div>';
+			$("#productions").append(stringProdution)
+		});
 
 		
 		//runFunctions();
