@@ -56,6 +56,8 @@ var MANAGER = {};
 			}
 			$("#initialPrices").html(MANAGER.initialPricesHtml);
 			$("#productions").html(MANAGER.initialProductionHtml);
+			
+			updateResourcesAddForm();
 		});
 
 		//$("#submitItem").click(function(){});
@@ -86,6 +88,7 @@ var MANAGER = {};
 
 		
 		//runFunctions();
+		/*
 		x = 1;
 		var initialResourcePrompt = prompt("Please enter your number "+ x +" initial resource NAME in this game, press cancel to exit","");
 		while (initialResourcePrompt != null){
@@ -98,7 +101,7 @@ var MANAGER = {};
 			x++;
 			initialResourcePrompt = prompt("Please enter your number "+ x +" initial resource in this game, press cancel to exit","");
 		}
-		
+		*/
 		//var upgradesPrompt = prompt('add your wanted upgrades : [{"name":"upgrade1","affects":"Casa","increase":"1.2","augments":"4"},{"name":"upgrade2","affects":"Casa","increase":"1.1","augments":"5"}]','[{"name":"upgrade1","affects":"Casa","increase":"1.2","augments":"4"},{"name":"upgrade2","affects":"Casa","increase":"1.1","augments":"5"}]');
 		//upgradesArray = $.parseJSON(upgradesPrompt);
 		//[{name:"upgrade1",affects:"Casa",increase:1.2,augments:4,cost:{money:50,tierra:10}},{name:"upgrade2",affects:"Casa",increase:1.1,augments:5,cost:{money:50,tierra:10}}]
@@ -123,6 +126,20 @@ var MANAGER = {};
 			items[propertyName].updateHtml();
 		}
 	}
+	
+	function updateResourcesAddForm(){
+		htmlResourcesAddForm = "";
+		for(var propertyName in resources) {
+			htmlResourcesAddForm+= "<label>" + propertyName + "</label><input id='add" + propertyName + "' /><input type='button' onclick='addResource(\"" + propertyName + "\")' value='aceptar' />";
+		}
+		$("#formAddResources").html(htmlResourcesAddForm);
+	}
+	
+	function addResource(resource){
+		resources[resource] += parseInt($("#add"+resource) .val());
+	}
+	
+	
 	
 	function produceResources(){
 		
