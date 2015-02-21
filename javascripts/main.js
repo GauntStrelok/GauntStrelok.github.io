@@ -4,12 +4,26 @@ var MANAGER = {};
 	MANAGER.initialPricesHtml = "";
 	MANAGER.initialProductionHtml = "";
 	
+	//"{"Casa":{"name":"Casa","price":{"money":{"quantity":47069231989101}},"increment":"1.1","resource":[{"resource":"money","quantity":"100000000000"}],"quantity":282}}"
 	var items = {};
 	
+	//"{"money":24798707680109930}"
 	var resources = {};
 	
+	/*
+	upgrade[nombre].affects = [];
+	affects[].type(sum, percentage, production, achievments, cost reduction, interest, cost deletion, addproduction);
+	affects[].item;
+	affects[].items[] shuttle
+	affects[].productresource
+	affects[].costresource
+	affects[].quantity(or interest)
+	affects[].resource
+	affects[].ticks
+	*/
 	var upgrades = {};
 	
+	//first function called.
 	function init(){
 
 		MANAGER.initialPricesHtml = $("#initialPrices").html();
@@ -27,6 +41,11 @@ var MANAGER = {};
 			$(".initialPriceResource").each(function(){
 				itemPrice[$(this).val()] = {};
 				itemPrice[$(this).val()].quantity = $(this).siblings().val();
+				if(resources[$(this).val()] == null || resources[$(this).val()]<0){
+					resources[$(this).val()] = 0;
+					var resourcesDiv = $("#resources");
+					resourcesDiv.html(resourcesDiv.html()+"  -  "+$(this).val()+": <label id='cantidad"+ $(this).val() +"'>"+0+"</label>");
+				}
 			});
 
 			itemIncrement = $("#inputItemIcrement").val();
@@ -43,11 +62,11 @@ var MANAGER = {};
 				resource: itemProduction,
 				quantity: 0,
 				updateHtml : function(){
-					$("#"+ this.name +"").text(this.name+": "+this.quantity);
-					$("#"+ this.name +"Price").text(priceToString(this.price,MANAGER.quantity,this.increment));   //check viability
+					$("#"+ this.name.replace(/ /g,"_") +"").text(this.name+": "+this.quantity);
+					$("#"+ this.name.replace(/ /g,"_") +"Price").text(priceToString(this.price,MANAGER.quantity,this.increment));   //check viability
 				}
 			}
-			MANAGER.itemsHtml+="<div class='butt' onclick='buyItem(\"" + itemName +"\", "+ MANAGER.quantity +")'><label class='itemDescriptionLabel' id=" + itemName + ">"+ itemName +"</label><label class='itemDescriptionLabel' id='" + itemName + "Price'>"+ priceToString(itemPrice,1,1) +"</label><label class='itemDescriptionLabel' >"+ productionToString(itemProduction) +"</label></div>";
+			MANAGER.itemsHtml+="<div class='butt' onclick='buyItem(\"" + itemName +"\", "+ MANAGER.quantity +")'><label class='itemDescriptionLabel' id=" + itemName.replace(/ /g,"_") + ">"+ itemName +"</label><label class='itemDescriptionLabel' id='" + itemName.replace(/ /g,"_") + "Price'>"+ priceToString(itemPrice,1,1) +"</label><label class='itemDescriptionLabel' >"+ productionToString(itemProduction) +"</label></div>";
 		
 
 			$("#items").html(MANAGER.itemsHtml);
@@ -85,30 +104,9 @@ var MANAGER = {};
 	                            '</div>';
 			$("#productions").append(stringProdution)
 		});
-
 		
-		//runFunctions();
-		/*
-		x = 1;
-		var initialResourcePrompt = prompt("Please enter your number "+ x +" initial resource NAME in this game, press cancel to exit","");
-		while (initialResourcePrompt != null){
-			initialResourceQuantityPrompt = prompt("Please enter your number "+ x +" initial resource QUANTITY in this game, press cancel to exit","");
-
-			resources[initialResourcePrompt]  = parseInt(initialResourceQuantityPrompt);
-
-
-			$("#resources").html($("#resources").html()+"  -  "+ initialResourcePrompt +": <label id='cantidad"+ initialResourcePrompt +"'>"+ initialResourceQuantityPrompt +"</label>");
-			x++;
-			initialResourcePrompt = prompt("Please enter your number "+ x +" initial resource in this game, press cancel to exit","");
-		}
-		*/
-		//var upgradesPrompt = prompt('add your wanted upgrades : [{"name":"upgrade1","affects":"Casa","increase":"1.2","augments":"4"},{"name":"upgrade2","affects":"Casa","increase":"1.1","augments":"5"}]','[{"name":"upgrade1","affects":"Casa","increase":"1.2","augments":"4"},{"name":"upgrade2","affects":"Casa","increase":"1.1","augments":"5"}]');
-		//upgradesArray = $.parseJSON(upgradesPrompt);
-		//[{name:"upgrade1",affects:"Casa",increase:1.2,augments:4,cost:{money:50,tierra:10}},{name:"upgrade2",affects:"Casa",increase:1.1,augments:5,cost:{money:50,tierra:10}}]
-		
-		
+		//start the timer of the game.
 		var cualc = setInterval(function(){ runFunctions()}, 1000);
-		//prompt("test",JSON.stringify(items));
 	
 	}
 	
@@ -130,7 +128,7 @@ var MANAGER = {};
 	function updateResourcesAddForm(){
 		htmlResourcesAddForm = "";
 		for(var propertyName in resources) {
-			htmlResourcesAddForm+= "<label>" + propertyName + "</label><input id='add" + propertyName + "' /><input type='button' onclick='addResource(\"" + propertyName + "\")' value='aceptar' />";
+			htmlResourcesAddForm+= "<label>Agregar " + propertyName + "</label><input id='add" + propertyName + "' /><input type='button' onclick='addResource(\"" + propertyName + "\")' value='aceptar' />";
 		}
 		$("#formAddResources").html(htmlResourcesAddForm);
 	}
@@ -211,7 +209,7 @@ var MANAGER = {};
 		quantity = MANAGER.quantity;
 		
 		for(var propertyName in items[name].price) { //for each resource to buy the item
-			if(resources[propertyName] ==null || resources[propertyName] < items[name].price[propertyName].quantity*quantity){ //asks if it exists the necessary resource, and if it have the necessary amount
+			if(resources[propertyName] ==null || resources[propertyName] < Math.floor(items[name].price[propertyName].quantity*(Math.pow(items[name].increment,quantity)-1)/(items[name].increment-1))){ //asks if it exists the necessary resource, and if it have the necessary amount
 				console.log("no puedo");
 				return;
 			}
@@ -226,6 +224,7 @@ var MANAGER = {};
 					items[name].price[propertyName].quantity = Math.floor(items[name].price[propertyName].quantity);
 				}
 				*/
+				//mathematical way of doing it FASTER.
 				items[name].price[propertyName].quantity = Math.floor(items[name].price[propertyName].quantity*Math.pow(items[name].increment,quantity));
 				
 				
