@@ -11,16 +11,28 @@ var MANAGER = {};
 	var resources = {};
 	
 	/*
-	upgrade[nombre].affects = [];
-	affects[].type(sum, percentage, production, achievments, cost reduction, interest, cost deletion, addproduction);
-	affects[].item;
-	affects[].items[] shuttle
-	affects[].productresource
-	affects[].costresource
-	affects[].quantity(or interest)
-	affects[].resource
-	affects[].ticks
+	upgrade[nombre][item/"AllThePossibleItems"] = {};
+	.type(sum, percentage, production, achievments, cost reduction, interest, cost deletion, addproduction);
+	.item;
+	.productresource
+	.costresource
+	.quantity(or interest)
+	.resource
+	.ticks
 	*/
+
+	//multi select
+	/*
+		$("#lstSelect").change(function(){
+	  	var selectedValues = [];    
+	    $("#lstSelect :selected").each(function(){
+	        selectedValues.push($(this).val()); 
+	    });
+	    alert(selectedValues);
+	    return false;
+		});
+	*/
+
 	var upgrades = {};
 	
 	//first function called.
