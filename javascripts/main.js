@@ -130,6 +130,26 @@ var MANAGER = {};
 	function createUpgrades(){
 		$('#upgradeItemSelector').on('change', function() {
 		  alert($(this).val()); // or $(this).val()
+		  			 $(this).each(function(index,element){
+				itemName = $(element).val();
+				itemsTypesHtml = '<div  class="form-group control-group">'+
+                        '<label class="control-label" for="upgradeTypeSelector">Tipo de upgrade para ' + itemName + '</label>'+
+                        '<div class="controls">'+
+                        '<select class="form-control" id="select1" item=' + itemName + '>'+
+                            'option>Sum</option>'+
+                            '<option>Percentage</option>'+
+                            '<option>Add production type</option>'+
+                            '<option>Cost reduction</option>'+
+                            '<option>Delete cost type</option>'+
+                            '<option>Interest over a resource</option>'+
+                            '<option>Bonus from getting achievments</option>'+
+                        '</select>'+
+                        '</div>'+
+                    '</div>';
+				
+				
+				$("#itemsTypes").append(itemsTypesHtml);
+				
 		});
 	};
 	
