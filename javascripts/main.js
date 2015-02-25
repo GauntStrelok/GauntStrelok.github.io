@@ -3,6 +3,7 @@ var MANAGER = {};
 	MANAGER.itemsHtml = "";
 	MANAGER.initialPricesHtml = "";
 	MANAGER.initialProductionHtml = "";
+	MANAGER.itemUpgradeValue = 1;
 	
 	//"{"Casa":{"name":"Casa","price":{"money":{"quantity":47069231989101}},"increment":"1.1","resource":[{"resource":"money","quantity":"100000000000"}],"quantity":282}}"
 	var items = {};
@@ -19,6 +20,7 @@ var MANAGER = {};
 	.quantity(or interest)
 	.resource
 	.ticks
+	.buyingCost
 	*/
 
 	//multi select
@@ -89,8 +91,11 @@ var MANAGER = {};
 			$("#productions").html(MANAGER.initialProductionHtml);
 			
 			updateResourcesAddForm();
+			//agrega el item recien creado a el combo de items para los upgrades
+			$("#upgradeItemSelector").append("<option value="+ itemName +">"+ itemName +"</option>");
+			MANAGER.itemUpgradeValue++;
 		});
-
+		
 		//$("#submitItem").click(function(){});
 
 		//add cost item with an append
@@ -121,6 +126,12 @@ var MANAGER = {};
 		var cualc = setInterval(function(){ runFunctions()}, 1000);
 	
 	}
+
+	function createUpgrades(){
+		$('#upgradeItemSelector').on('change', function() {
+		  alert($(this).val()); // or $(this).val()
+		});
+	};
 	
 	
 
