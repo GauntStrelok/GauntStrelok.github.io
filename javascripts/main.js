@@ -4,6 +4,7 @@ var MANAGER = {};
 	MANAGER.initialPricesHtml = "";
 	MANAGER.initialProductionHtml = "";
 	MANAGER.itemUpgradeValue = 1;
+	MANAGER.flagApplyToAllItems = false;
 	
 	//"{"Casa":{"name":"Casa","price":{"money":{"quantity":47069231989101}},"increment":"1.1","resource":[{"resource":"money","quantity":"100000000000"}],"quantity":282}}"
 	var items = {};
@@ -126,30 +127,57 @@ var MANAGER = {};
 		var cualc = setInterval(function(){ runFunctions()}, 1000);
 	
 	}
-
+	//initialize upgrades form
 	function createUpgrades(){
+
+
 		$('#upgradeItemSelector').on('change', function() {
-		  alert($(this).val()); // or $(this).val()
-		  			 $(this).each(function(index,element){
-				itemName = $(element).val();
-				itemsTypesHtml = '<div  class="form-group control-group">'+
-                        '<label class="control-label" for="upgradeTypeSelector">Tipo de upgrade para ' + itemName + '</label>'+
-                        '<div class="controls">'+
-                        '<select class="form-control" id="select1" item=' + itemName + '>'+
-                            'option>Sum</option>'+
-                            '<option>Percentage</option>'+
-                            '<option>Add production type</option>'+
-                            '<option>Cost reduction</option>'+
-                            '<option>Delete cost type</option>'+
-                            '<option>Interest over a resource</option>'+
-                            '<option>Bonus from getting achievments</option>'+
-                        '</select>'+
-                        '</div>'+
-                    '</div>';
-				
-				
-				$("#itemsTypes").append(itemsTypesHtml);
-				
+		  //alert($(this).val()); // or $(this).val()
+
+		  		if($($(this)[0]).val() == "Apply to all items" ){
+		  			itemName = "Apply to all items"
+		  			itemsTypesHtml = '<div  class="form-group control-group">'+
+		                        '<label class="control-label" for="upgradeTypeSelector">Tipo de upgrade para ' + itemName + '</label>'+
+		                        '<div class="controls">'+
+		                        '<select class="form-control selectUpgradeType" id="upgradeTypeFor'+ itemName +'"" item="' + itemName + '">'+
+		                            'option>Sum</option>'+
+		                            '<option>Percentage</option>'+
+		                            '<option>Add production type</option>'+
+		                            '<option>Cost reduction</option>'+
+		                            '<option>Delete cost type</option>'+
+		                            '<option>Interest over a resource</option>'+
+		                            '<option>Bonus from getting achievments</option>'+
+		                        '</select>'+
+		                        '</div>'+
+		                    '</div>';
+		            $("#itemsTypes").html(itemsTypesHtml);
+		            MANAGER.flagApplyToAllItems = true;
+		  		}
+		  		else{
+		  			//deletes the old html
+		  			$("#itemsTypes").html("");
+			  		$($(this).val()).each(function(index,element){
+						itemName = element;
+
+						//create upgrade type html per item selected
+						itemsTypesHtml = '<div  class="form-group control-group">'+
+		                        '<label class="control-label" for="upgradeTypeSelector">Tipo de upgrade para ' + itemName + '</label>'+
+		                        '<div class="controls">'+
+		                        '<select class="form-control selectUpgradeType" item="' + itemName + '">'+
+		                            'option>Sum</option>'+
+		                            '<option>Percentage</option>'+
+		                            '<option>Add production type</option>'+
+		                            '<option>Cost reduction</option>'+
+		                            '<option>Delete cost type</option>'+
+		                            '<option>Interest over a resource</option>'+
+		                            '<option>Bonus from getting achievments</option>'+
+		                        '</select>'+
+		                        '</div>'+
+		                    '</div>';
+						//appends the html
+							$("#itemsTypes").append(itemsTypesHtml);
+					});
+				}
 		});
 	};
 	

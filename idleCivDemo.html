@@ -177,25 +177,13 @@
                         <label class="control-label" for="itemSelector">Item/s a los que afecta este upgrade</label>
                         <div class="controls">
                         <select multiple class="form-control" id="upgradeItemSelector">
+                        <option value="Apply to all items">Apply to all items</option>
                         </select>
+                        <p class="help-block" style="color:gray">Selecciona los items que desea que apliquen este upgrade, o selecciona la opcion "Todos" para que el upgrade realice la misma accion en todos los items(como por ejemplo puede ser reduccion de precios)</p>
                         </div>
                     </div>
                     <!-- esto se va a hacer dinamico por cada item seleccionado, si la opcion es everyone, las opciones que aparecen aca seran menores -->
-                    <div class="form-group control-group">
-                        <label class="control-label" for="upgradeTypeSelector">Tipo de upgrade</label>
-                        <div class="controls">
-                        <select class="form-control" id="select1">
-                            <!--
-                            <option>Sum</option>
-                            <option>Percentage</option>
-                            <option>Add production type</option>
-                            <option>Cost reduction</option>
-                            <option>Delete cost type</option>
-                            <option>Interest over a resource</option>
-                            <option>Bonus from getting achievments</option>
-                            -->
-                        </select>
-                        </div>
+                    <div id="itemsTypes">
                     </div>
                     
                 </div>
