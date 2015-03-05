@@ -8,15 +8,13 @@ control sobre shift y ctrl para cambiar la cantidad de cosas compradas y el prec
 
 ---- TODO  GAME ----
 
-poner los formularios en vez de prompts 1D sabado!!(martes not yet)!!
-
-Indicacion de un recurso/s inicial/es READY(completado pero no, rehacerlo con el formulario)
+TODO formulario upgrades.(se debe agregar una clase para tomar todos los inputs en el submit);
 
 Recursos que necesitan para funcionar, por ejemplo una constructora no puede construir  casas sin madera. 1h
 
 desactivado y activado de edificios que utilicen recursos1h (deberia ser una propiedad con un if)
 
-Upgrades varios(nada definido) DEFINIR
+Upgrades varios definido, aun se trabaja sobre el formulario
 
 eventos aleatorios DEFINIR (en todo caso, antes de cada run vas a tener un cierto chance de que ocurra algo)
 
@@ -34,7 +32,7 @@ http://stackoverflow.com/questions/228835/best-practice-javascript-and-multilang
 
 infoWindow para achievments u otras cosas, lo pongo en otros porque estaria bueno hacerla
 
-formulario de ingreso de edificios con el fin de simplificar las cosas(si puede estar dentro de un infowindow MEJOR)
+formulario de ingreso de edificios con el fin de simplificar las cosas(si puede estar dentro de un infowindow MEJOR) buscar en vez de infowindows, un slider o algun menu desplegable.
 
 eventhandler(ya esta hecho en parte lo del shift y ctrl)
 
