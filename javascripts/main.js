@@ -121,7 +121,7 @@ var MANAGER = {};
 	                            '</div>';
 			$("#productions").append(stringProdution)
 		});
-		
+		createUpgrades();
 		//start the timer of the game.
 		var cualc = setInterval(function(){ runFunctions()}, 1000);
 	
@@ -140,13 +140,13 @@ var MANAGER = {};
 	                        '<div class="controls">'+
 	                        '<select class="form-control selectUpgradeType" id="upgradeTypeFor'+ itemName +'"" item="' + itemName + '">'+
 	                        	'<option>Select one</option>'+
-	                            '<option>Percentage increase production one resource</option>'+
-	                            '<option>Percentage increase production all resources</option>'+
-	                            '<option>Cost reduction percentage one resource</option>'+
-	                            '<option>Percentage increase production all resources</option>'+
-	                            '<option>Delete cost type</option>'+
-	                            '<option>Interest over a resource</option>'+
-	                            '<option>Bonus from getting achievments</option>'+
+	                            '<option value="percIncOneRes">'+'Percentage increase production one resource'+'</option>'+
+	                            '<option value="percIncAllRes">'+'Percentage increase production all resources'+'</option>'+
+	                            '<option value="costRedPercOneRes">'+'Cost reduction percentage one resource'+'</option>'+
+	                            '<option value="costRedPercAllRes">'+'Cost reduction percentage all resources'+'</option>'+
+	                            '<option value="delCostType">'+'Delete cost type'+'</option>'+
+	                            '<option value="intOverRes">'+'Interest over a resource'+'</option>'+
+	                            '<option value="bonFromAchievments">'+'Bonus from getting achievments'+'</option>'+
 	                        '</select>'+
 	                        '</div>'+
 	                    '</div>';
@@ -165,16 +165,16 @@ var MANAGER = {};
 	                        '<div class="controls">'+
 	                        '<select class="form-control selectUpgradeType" item="' + itemName.replace(/ /g,"_") + '" index="'+ index +'">'+
 	                        	'<option>Select one</option>'+
-	                            '<option>Sum increase production one resource</option>'+
-	                            '<option>Sum increase production all resources</option>'+
-	                            '<option>Percentage increase production one resource</option>'+
-	                            '<option>Percentage increase production all resources</option>'+
-	                            '<option>Add production type</option>'+
-	                            '<option>Cost reduction percentage one resource</option>'+
-	                            '<option>Cost reduction percentage all resources</option>'+
-	                            '<option>Delete cost type</option>'+
-	                            '<option>Interest over a resource</option>'+
-	                            '<option>Bonus from getting achievments</option>'+
+	                            '<option value="sumIncOneRes">'+'Sum increase production one resource'+'</option>'+
+	                            '<option value="sumIncAllRes">'+'Sum increase production all resources'+'</option>'+
+	                            '<option value="percIncOneRes">'+'Percentage increase production one resource'+'</option>'+
+	                            '<option value="percIncAllRes">'+'Percentage increase production all resources'+'</option>'+
+	                            '<option value="addProdType">'+'Add production type'+'</option>'+
+	                            '<option value="costRedPercOneRes">'+'Cost reduction percentage one resource'+'</option>'+
+	                            '<option value="costRedPercAllRes">'+'Cost reduction percentage all resources'+'</option>'+
+	                            '<option value="delCostType">'+'Delete cost type'+'</option>'+
+	                            '<option value="intOverRes">'+'Interest over a resource'+'</option>'+
+	                            '<option value="bonFromAchievments">'+'Bonus from getting achievments'+'</option>'+
 	                        '</select>'+
 	                        '</div>'+
 	                    '</div>'+
@@ -187,45 +187,46 @@ var MANAGER = {};
 				
 
 				switch ($(this).val()) {
-					case "Sum increase production one resource":
-					  	createInputs($(this).attr("index")+$(this).attr("item"),["Resource","Amount"],"inputUpgradeType");
-					    //Statements executed when the result of expression matches value1
+					case "sumIncOneRes":
+						//create an input
+					  	createInputs($(this).attr("index"),$(this).attr("item"),["Resource","Amount"],"inputUpgradeType",["Recurso","Cantidad"]);
+
 					    break;
-					case "Sum increase production all resources":
-					  	createInputs($(this).attr("index")+$(this).attr("item"),["Amount"],"inputUpgradeType");
-					    //Statements executed when the result of expression matches value1
+					case "sumIncAllRes":
+					  	createInputs($(this).attr("index"),$(this).attr("item"),["Amount"],"inputUpgradeType");
+
 					    break;
-					case "Percentage increase production one resource":
-						createInputs($(this).attr("index")+$(this).attr("item"),["Resource","percentage"],"inputUpgradeType");
-					    //Statements executed the result of expression matches value2
+					case "percIncOneRes":
+						createInputs($(this).attr("index"),$(this).attr("item"),["Resource","Percentage"],"inputUpgradeType");
+
 					    break;
-					case "Percentage increase production all resources":
-						createInputs($(this).attr("index")+$(this).attr("item"),["percentage"],"inputUpgradeType");
-					    //Statements executed the result of expression matches value2
+					case "percIncAllRes":
+						createInputs($(this).attr("index"),$(this).attr("item"),["Percentage"],"inputUpgradeType");
+
 					    break;
-					case "Add production type":
-						createInputs($(this).attr("index")+$(this).attr("item"),["Resource","Amount"],"inputUpgradeType");
-					    //Statements executed when the result of expression matches valueN
+					case "addProdType":
+						createInputs($(this).attr("index"),$(this).attr("item"),["Resource","Amount"],"inputUpgradeType");
+					     
 					    break;
-					case "Cost reduction percentage one resource":
-						createInputs($(this).attr("index")+$(this).attr("item"),["Resource","Percentage"],"inputUpgradeType");
-					    //Statements executed when the result of expression matches valueN
+					case "costRedPercOneRes":
+						createInputs($(this).attr("index"),$(this).attr("item"),["Resource","Percentage"],"inputUpgradeType");
+					     
 					    break;
-					case "Cost reduction percentage all resources":
-						createInputs($(this).attr("index")+$(this).attr("item"),["Percentage"],"inputUpgradeType");
-					    //Statements executed when the result of expression matches valueN
+					case "costRedPercAllRes":
+						createInputs($(this).attr("index"),$(this).attr("item"),["Percentage"],"inputUpgradeType");
+					     
 					    break;
-					case "Delete cost type":
-						createInputs($(this).attr("index")+$(this).attr("item"),["Resource"],"inputUpgradeType");
-					    //Statements executed when the result of expression matches valueN
+					case "delCostType":
+						createInputs($(this).attr("index"),$(this).attr("item"),["Resource"],"inputUpgradeType");
+					     
 					    break;
-					case "Interest over a resource":
-						createInputs($(this).attr("index")+$(this).attr("item"),["Resource","Percentage","ticks"],"inputUpgradeType");
-					    //Statements executed when the result of expression matches valueN
+					case "intOverRes":
+						createInputs($(this).attr("index"),$(this).attr("item"),["Resource","Percentage","Ticks"],"inputUpgradeType");
+					     
 					    break;
-					case "Bonus from getting achievments":
-						createInputs($(this).attr("index")+$(this).attr("item"),["Percentage"],"inputUpgradeType");
-					    //Statements executed when the result of expression matches valueN
+					case "bonFromAchievments":
+						createInputs($(this).attr("index"),$(this).attr("item"),["Percentage"],"inputUpgradeType");
+					     
 					    break;
 					default:
 						alert("Select a correct option please");
@@ -242,10 +243,9 @@ var MANAGER = {};
 		});
 	};
 	//temporary test function
-	function takeupgrades(){
+	function takeUpgrades(){
 
 		var upgradeName = $("#upgradeName");
-		console.log($(upgradeName).val());
 		upgradeName = $(upgradeName).val();
 		upgrades[upgradeName] = {};
 
@@ -259,8 +259,6 @@ var MANAGER = {};
 
 		var typeOfUpgradesForEachItem = $(".selectUpgradeType");
 		typeOfUpgradesForEachItem.each(function(index,inputType){
-			console.log($(inputType).val());
-			console.log($(inputType).attr("item"));
 			upgrades[upgradeName][$(inputType).attr("item")].type = $(inputType).val();
 
 		});
@@ -271,10 +269,13 @@ var MANAGER = {};
 		var inputsForEachType = $(".inputUpgradeType");
 
 		inputsForEachType.each(function(index,element){
-			console.log($(element).val());
-			//el primer numero es el index, luego viene el nombre del item, luego viene el tipo de input(amount, percentage, etc)
-			console.log($(element).attr("id"));
+			datos = $(element).attr("id").split('-');
+			//datos[0] is the item name, datos[1] is the input name
+			upgrades[upgradeName][datos[0]][datos[1]]= $(element).val();
+
 		});
+		$('#upgradeItemSelector option').prop('selected', false);
+		$("#itemsTypes").html("");
 	}
 
 
@@ -405,6 +406,34 @@ var MANAGER = {};
 		
 	}
 
+	function generateUpgradeHtml(upgradeName){
+		tooltip = "";
+		html = upgradeName+"\n MouseOver to see description";
+		for (var propertyName in upgrades[upgradeName]){
+			
+			tooltip += "Afecta a "+propertyName+"\n";
+			if(upgrades[upgradeName][propertyName].type){
+				tooltip+= ", Tipo "+upgrades[upgradeName][propertyName].type
+			}
+			if(upgrades[upgradeName][propertyName].Amount){
+				tooltip+= ", Cantidad "+upgrades[upgradeName][propertyName].Amount
+			}
+			if(upgrades[upgradeName][propertyName].Resource){
+				tooltip+= ", Recurso "+upgrades[upgradeName][propertyName].Resource
+			}
+			if(upgrades[upgradeName][propertyName].Percentage){
+				tooltip+= ", Porcentaje "+upgrades[upgradeName][propertyName].Percentage
+			}
+			if(upgrades[upgradeName][propertyName].Ticks){
+				tooltip+= ", Ticks "+upgrades[upgradeName][propertyName].Ticks
+			}
+		}
+
+		$("#upgrades").append("<div class='butt' title='"+ tooltip +"'>"+html+"</div>");
+
+
+	}
+
 
 	function priceToString(itemPrices,quantity,increment){
 		var priceString = "";
@@ -423,11 +452,11 @@ var MANAGER = {};
 		return resourcesString.substring(0, resourcesString.length - 2);
 	}
 
-	function createInputs(jquerySelector,inputNameArray,inputClass){
-		originDiv = $("#"+jquerySelector);
+	function createInputs(place,jquerySelector,inputNameArray,inputClass,labelArray){
+		originDiv = $("#"+place+jquerySelector);
 		html = "";
-		inputNameArray.forEach(function(entry) {
-			
+		inputNameArray.forEach(function(entry, index) {
+			label = (labelArray)? labelArray[index] : inputNameArray[index];
 			html+= '<div class="control-group">'+
                       '<label class="control-label">'+ entry +'</label>'+
                       '<div class="controls">'+
@@ -445,4 +474,4 @@ var MANAGER = {};
 	}
 	
 
-	setTimeout(function(){ init();}, 5000);
+	setTimeout(function(){ init();}, 1000);
