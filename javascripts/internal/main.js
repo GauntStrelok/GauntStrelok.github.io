@@ -66,7 +66,7 @@ var MANAGER = {};
 
 			itemProduction = [];
 			$(".itemProduction").each(function(){
-				itemProduction[$(this).val()] = $(this).siblings().val();
+				itemProduction[$(this).val()] = parseInt($(this).siblings().val());
 				//itemProduction.push({resource:$(this).val(),quantity:$(this).siblings().val()});
 			});
 
@@ -79,9 +79,10 @@ var MANAGER = {};
 				updateHtml : function(){
 					$("#"+ this.name.replace(/ /g,"_") +"").text(this.name+": "+this.quantity);
 					$("#"+ this.name.replace(/ /g,"_") +"Price").text(priceToString(this.price,MANAGER.quantity,this.increment));   //check viability
+					$("#"+ this.name.replace(/ /g,"_") +"Production").text(productionToString(this.itemProduction));
 				}
 			}
-			MANAGER.itemsHtml+="<div class='butt' onclick='buyItem(\"" + itemName +"\", "+ MANAGER.quantity +")'><label class='itemDescriptionLabel' id=" + itemName.replace(/ /g,"_") + ">"+ itemName +"</label><br><label class='itemDescriptionLabel' id='" + itemName.replace(/ /g,"_") + "Price'>"+ priceToString(itemPrice,1,1) +"</label><br><label class='itemDescriptionLabel' >"+ productionToString(itemProduction) +"</label></div>";
+			MANAGER.itemsHtml+="<div class='butt' onclick='buyItem(\"" + itemName +"\", "+ MANAGER.quantity +")'><label class='itemDescriptionLabel' id=" + itemName.replace(/ /g,"_") + ">"+ itemName +"</label><br><label class='itemDescriptionLabel' id='" + itemName.replace(/ /g,"_") + "Price'>"+ priceToString(itemPrice,1,1) +"</label><br><label class='itemDescriptionLabel' id='" + itemName.replace(/ /g,"_") + "Production'>"+ productionToString(itemProduction) +"</label></div>";
 		
 
 			$("#items").html(MANAGER.itemsHtml);
@@ -315,16 +316,16 @@ var MANAGER = {};
 		for (var propertyName in upgrades[upgradeName]){
 			
 
-			if(propertyName == "resourcePrice"){
+			if(propertyName != "resourcePrice"){
 				tooltip += "Afecta a "+propertyName+"\n";
 				if(upgrades[upgradeName][propertyName].type){
 					tooltip+= ", Tipo "+upgrades[upgradeName][propertyName].type
 				}
-				if(upgrades[upgradeName][propertyName].Amount){
-					tooltip+= ", Cantidad "+upgrades[upgradeName][propertyName].Amount
+				if(upgrades[upgradeName][propertyName].amount){
+					tooltip+= ", Cantidad "+upgrades[upgradeName][propertyName].amount
 				}
-				if(upgrades[upgradeName][propertyName].Resource){
-					tooltip+= ", Recurso "+upgrades[upgradeName][propertyName].Resource
+				if(upgrades[upgradeName][propertyName].resource){
+					tooltip+= ", Recurso "+upgrades[upgradeName][propertyName].resource
 				}
 				if(upgrades[upgradeName][propertyName].Percentage){
 					tooltip+= ", Porcentaje "+upgrades[upgradeName][propertyName].Percentage
@@ -335,11 +336,11 @@ var MANAGER = {};
 			}
 		}
 		if(upgrades[upgradeName]["resourcePrice"] && temporalVariable){
-				tooltip+= ".\n Coste "+upgrades[upgradeName][propertyName]["resourcePrice"].toString();
+				tooltip+= ".\n Coste "+upgradePriceToString(upgrades[upgradeName][propertyName]);
 				temporalVariable = false;
 		}
 
-		$("#upgrades").append("<div class='butt' title='"+ tooltip +"'>"+html+"</div>");
+		$("#upgrades").append("<div class='butt' title='"+ tooltip +"' id='upgrade"+ upgradeName +"'>"+html+"</div>");
 
 
 	}
@@ -350,52 +351,61 @@ var MANAGER = {};
 			switch(upgrade[itemName].type){
 					case "sumIncOneRes":
 						//the quantity of the resource of the name in the upgrade of the item of the name "itemName" adds the upgrade amount
-
-						items[itemName].resource[upgrade[itemName].resource].quantity += upgrade[itemName].amount;
+						var resourceToIncrease = upgrade[itemName].resource;
+						items[itemName].resource[resourceToIncrease] += parseInt(upgrade[itemName].amount);
+						var selector = "#upgrade"+upgradeName;
+						$(selector)
 
 					    break;
 					case "sumIncAllRes":
 					  	for(resourceName in items[itemName].resource){
-					  		items[itemName].resource[resourceName].quantity += upgrade[itemName].amount;
+					  		items[itemName].resource[resourceName] += upgrade[itemName].amount;
 					  	}
 
 
 					    break;
 					case "percIncOneRes":
-						createInputs($(this).attr("index"),$(this).attr("item"),["Resource","Percentage"],"inputUpgradeType");
+						var resourceToIncrease = upgrade[itemName].resource;
+						items[itemName].resource[resourceToIncrease] *= parseInt(upgrade[itemName].percentage);
 
 					    break;
 					case "percIncAllRes":
-						createInputs($(this).attr("index"),$(this).attr("item"),["Percentage"],"inputUpgradeType");
+						for(resourceName in items[itemName].resource){
+					  		items[itemName].resource[resourceName] *= parseInt(upgrade[itemName].percentage);
+					  	}
 
 					    break;
 					case "addProdType":
-						items[itemName].resource[upgrade[itemName].resource] = upgrade[itemName].amount;
+						items[itemName].resource[upgrade[itemName].resource] = parseInt(upgrade[itemName].amount);
 						//items[itemName].resource.push({quantity:upgrade[itemName].amount,resource:upgrade[itemName].resource});
 					     
 					    break;
 					case "costRedPercOneRes":
-						createInputs($(this).attr("index"),$(this).attr("item"),["Resource","Percentage"],"inputUpgradeType");
+						var resourceToDecrease = upgrade[itemName].resource;
+						items[itemName].price[resourceToDecrease] *= parseInt(upgrade[itemName].percentage);
 					     
 					    break;
 					case "costRedPercAllRes":
-						createInputs($(this).attr("index"),$(this).attr("item"),["Percentage"],"inputUpgradeType");
+						for(priceName in items[itemName].price){
+					  		items[itemName].price[priceName] *= parseInt(upgrade[itemName].percentage);
+					  	}
 					     
 					    break;
 					case "delCostType":
-						createInputs($(this).attr("index"),$(this).attr("item"),["Resource"],"inputUpgradeType");
-					     
+						//createInputs($(this).attr("index"),$(this).attr("item"),["Resource"],"inputUpgradeType");
+					     alert("upgrade type disabled because not included in 1.0")
 					    break;
 					case "intOverRes":
-						createInputs($(this).attr("index"),$(this).attr("item"),["Resource","Percentage","Ticks"],"inputUpgradeType");
-					     
+						//createInputs($(this).attr("index"),$(this).attr("item"),["Resource","Percentage","Ticks"],"inputUpgradeType");
+					     alert("upgrade type disabled because not included in 1.0")
 					    break;
 					case "bonFromAchievments":
-						createInputs($(this).attr("index"),$(this).attr("item"),["Percentage"],"inputUpgradeType");
-					     
+						//createInputs($(this).attr("index"),$(this).attr("item"),["Percentage"],"inputUpgradeType");
+					     alert("upgrade type disabled because not included in 1.0")
 					    break;
 					default:
-						alert("Select a correct option please");
+						//if the case not exist it could be the price to buy it.
+						//alert("Select a correct option please");
 					    //Statements executed when none of the values match the value of the expression
 					    break;
 			}
@@ -467,7 +477,7 @@ var MANAGER = {};
 		eventHandler.keyAllowed = {};
 		
 
-		$(document).keydown(function(e) { //it triggers when I click a key, for now is just 16(control) and 17(shift). It starts when you press it,so the function doesnt trigger everytime while you press it.
+		$(document).keydown(function(e) { //it triggers when I click(or push the button) a key, for now is just 16(control) and 17(shift). It starts when you press it,so the function doesnt trigger everytime while you press it.
 			if (eventHandler.keyAllowed [e.which] === false) return;
 			eventHandler.keyAllowed [e.which] = false;
 			if(e.which == 17 ){
@@ -482,18 +492,26 @@ var MANAGER = {};
 			}
 		});
 
-		$(document).keyup(function(e) { //gets whenever you relesa the key
+		$(document).keyup(function(e) { //gets whenever you release a the key
 		  eventHandler.keyAllowed [e.which] = true;
 		  if(e.which == 17 ){
 				MANAGER.quantity/=100;
 				updateItems();
+				if(MANAGER.quantity < 1){
+					MANAGER.quantity = 1;
+				}
 				return;
 			}
 			if(e.which == 16){
 				MANAGER.quantity/=10;
+				if(MANAGER.quantity < 1){
+					MANAGER.quantity = 1;
+				}
 				updateItems();
 				return;
 			}
+			
+			
 		});
 
 		$(document).focus(function(e) { 
@@ -539,6 +557,14 @@ var MANAGER = {};
 				
 		}
 		return priceString.substring(0, priceString.length - 2);//to delete the last comma if it is the last price
+	}
+	
+	function upgradePriceToString(prices){
+		var text = "";
+		for(var propertyName in prices) {
+			text+=propertyName+":"+prices[propertyName].quantity+" - ";
+		}
+		return text.substring(0, text.length -3); //to delete the last 3 spaces
 	}
 	
 	function productionToString(resources){
