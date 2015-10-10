@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Simple Sidebar - Start Bootstrap Template</title>
+    <title>Idle maker fast showcase</title>
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
@@ -85,7 +85,7 @@
 
     <div id="wrapper">
 
-        <!-- Sidebar -->
+        <!-- Sidebar >
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">
@@ -115,7 +115,7 @@
                     <a href="#">Contact</a>
                 </li>
             </ul>
-        </div>
+        </div -->
 
         <div id="page-content-wrapper">
             <div class="container-fluid">
@@ -126,11 +126,11 @@
                             <fieldset>
 
                             <!-- Form Name -->
-                                <legend>Form Name</legend>
+                                <legend>Idle Buidler</legend>
 
                                 <!-- Text input-->
                                 <div class="form-group">
-                                  <label class="col-md-4 control-label" for="inputItemName">Nombre</label>
+                                  <label class="col-md-4 control-label" for="inputItemName">Name</label>
                                   <div class="col-md-4">
                                     <input id="inputItemName" name="inputItemName" type="text"  class="form-control input-md">
                                   </div>
@@ -139,49 +139,50 @@
                                 <!-- Text input-->
                                 <div id="initialPrices">
                                     <div class="form-group">
-                                      <label class="col-md-4 control-label">Precio inicial</label>
+                                      <label class="col-md-4 control-label">Starting price</label>
                                       <div class="col-md-4">
-                                        <input type="text" placeholder="Tipo de recurso" class="form-control input-md initialPriceResource">
-                                        <input type="text" placeholder="Cantidad" class="form-control input-md">
+                                        <input type="text" placeholder="Resource's name" class="form-control input-md initialPriceResource">
+                                        <input type="text" placeholder="Amount" class="form-control input-md">
                                       </div>
                                     </div>
                                 </div>
                                 <!-- Button -->
                                 <div class="form-group">
                                   <div class="col-md-4">
-                                    <button id="addInitialPrice" name="addInitialPrice" class="btn btn-default">Agregar otro precio inicial</button>
+                                    <button id="addInitialPrice" name="addInitialPrice" class="btn btn-default">Add another starting price</button>
                                   </div>
                                 </div>
 
                                 <!-- Text input-->
                                 <div class="form-group">
-                                  <label class="col-md-4 control-label" for="inputItemIcrement">Incremento</label>
+                                  <label class="col-md-4 control-label" for="inputItemIcrement">Increment</label>
                                   <div class="col-md-4">
                                     <input id="inputItemIcrement" name="inputItemIcrement" type="text" class="form-control input-md input-">
-                                    <p class="help-block">e.g. 1.05(aumento del 5% de los precios por cada uno comprado).</p>
+                                    <p class="help-block">e.g. 1.05(increase of 5% of the resources cost for each one bought).</p>
                                   </div>
                                 </div>
                                 <br>
                                 <!-- Text input-->
                                 <div id="productions">
                                     <div class="form-group">
-                                      <label class="col-md-4 control-label" >Produccion</label>
+                                      <label class="col-md-4 control-label" >Production</label>
                                       <div class="col-md-4">
-                                        <input type="text" placeholder="Tipo de recurso o item" class="form-control input-md itemProduction">
-                                        <input type="text" placeholder="Cantidad" class="form-control input-md">
+                                        <input type="text" placeholder="Resource's name or item" class="form-control input-md itemProduction">
+                                        <p class="help-block">item should be already created</p>
+                                        <input type="text" placeholder="Amount" class="form-control input-md">
                                       </div>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                   <div class="col-md-4">
-                                    <button id="addProduction" name="singlebutton" class="btn btn-default">Agregar otro tipo de produccion.</button>
+                                    <button id="addProduction" name="singlebutton" class="btn btn-default">Add another resource to production.</button>
                                   </div>
                                 </div>
 
                                 <div class="form-group">
                                   <div class="col-md-4">
-                                    <button id="submitItem" name="singlebutton" class="btn btn-primary">Aceptar item</button>
+                                    <button id="submitItem" name="singlebutton" class="btn btn-primary">Accept item</button>
                                   </div>
                                 </div>
 
@@ -191,7 +192,7 @@
 
                         <div id="formCreateUpgrade" class="form-horizontal col-lg-6">
                             <div class="form-group form-group">
-                                <label class="col-md-4 control-label" for="upgradeName">Nombre del upgrade</label>
+                                <label class="col-md-4 control-label" for="upgradeName">Upgrade name</label>
                                 <div class="col-md-4">
                                     <input type="text" class="form-control" id="upgradeName">
                                 </div>
@@ -199,27 +200,28 @@
 
                             <div id="upgradeCosts">
                                 <div class="form-group">
-                                  <label class="col-md-4 control-label">Costes del upgrade</label>
+                                  <label class="col-md-4 control-label">Upgrade costs</label>
                                   <div class="col-md-4">
-                                    <input type="text" placeholder="Tipo de recurso" class="form-control input-md initialPriceUpgrade">
-                                    <input type="text" placeholder="Cantidad" class="form-control input-md">
+                                    <input type="text" placeholder="Resource's name" class="form-control input-md 
+                                    ">
+                                    <input type="text" placeholder="Amount" class="form-control input-md">
                                   </div>
                                 </div>
                             </div>
                                 <!-- Button -->
                             <div class="form-group">
                               <div class="col-md-4">
-                                <button id="addInitialPriceUpgrade" name="addInitialPriceUpgrade" class="btn btn-default">Agregar otro precio inicial al upgrade</button>
+                                <button id="addInitialPriceUpgrade" name="addInitialPriceUpgrade" class="btn btn-default">Add another initial price to the upgrade</button>
                               </div>
                             </div>
 
                             <div class="form-group form-group">
-                                <label class="col-md-4 control-label" for="itemSelector">Item/s a los que afecta este upgrade</label>
+                                <label class="col-md-4 control-label" for="itemSelector">Item/s that this upgrade affects</label>
                                 <div class="col-md-4">
                                 <select multiple class="form-control" id="upgradeItemSelector">
                                 <option value="Apply to all items">Apply to all items</option>
                                 </select>
-                                <p class="help-block" style="color:gray">Selecciona los items que desea que apliquen este upgrade, o selecciona la opcion "Todos" para que el upgrade realice la misma accion en todos los items(como por ejemplo puede ser reduccion de precios)</p>
+                                <p class="help-block" style="color:gray">Select the items that this upgrade you want to affect, or select the option apply to all items to make the upgrade to affect all items(e. g. price reduction %)</p>
                                 </div>
                             </div>
                             <!-- esto se va a hacer dinamico por cada item seleccionado, si la opcion es everyone, las opciones que aparecen aca seran menores -->
@@ -236,12 +238,12 @@
 
                     </div>
 
-                    <h3>Agregar Recursos</h3>
+                    <h3>Add resources</h3>
                     <div id="formAddResources" class="">
                             
                     </div>
 
-                    <h3>Juego</h3>
+                    <h3>Game</h3>
                     <div id="game">
                         <div id="resources" style=""></div>
 

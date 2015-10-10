@@ -66,7 +66,7 @@ var MANAGER = {};
 
 			itemProduction = [];
 			$(".itemProduction").each(function(){
-				itemProduction[$(this).val()] = parseInt($(this).siblings().val());
+				itemProduction[$(this).val()] = parseInt($(this).siblings()[1].value);
 				//itemProduction.push({resource:$(this).val(),quantity:$(this).siblings().val()});
 			});
 
@@ -105,8 +105,8 @@ var MANAGER = {};
 			stringPrice = 	'<div class="form-group">'+
 		                      '<label class="col-md-4 control-label"></label>'+
 		                      '<div class="col-md-4">'+
-		                        '<input type="text" placeholder="Tipo de recurso" class="form-control input-md initialPriceResource"> '+
-		                        '<input type="text" placeholder="Cantidad" class="form-control input-md">'+
+		                        '<input type="text" placeholder="Resource\'s name" class="form-control input-md initialPriceResource"> '+
+		                        '<input type="text" placeholder="Amount" class="form-control input-md">'+
 		                      '</div>'+
 		                    '</div>';
 			$("#initialPrices").append(stringPrice);
@@ -117,8 +117,9 @@ var MANAGER = {};
 			stringProdution ='	<div class="form-group">'+
 	                              '<label class="col-md-4 control-label" ></label>'+
 	                              '<div class="col-md-4">'+
-	                                '<input type="text" placeholder="Tipo de recurso o item" class="form-control input-md itemProduction"> '+
-	                                '<input type="text" placeholder="Cantidad" class="form-control input-md">'+
+	                                '<input type="text" placeholder="Resource\'s name or item" class="form-control input-md itemProduction" tooltip="you can place an item name here, to produce another item(derivative!!)"> '+
+	                                '<p class="help-block">item should be already created</p>'+
+	                                '<input type="text" placeholder="Amount" class="form-control input-md">'+
 	                              '</div>'+
 	                            '</div>';
 			$("#productions").append(stringProdution)
@@ -136,8 +137,8 @@ var MANAGER = {};
 			stringPrice = 	'<div class="form-group">'+
 		                      '<label class="col-md-4 control-label"></label>'+
 		                      '<div class="col-md-4">'+
-		                        '<input type="text" placeholder="Tipo de recurso" class="form-control input-md initialPriceUpgrade"> '+
-		                        '<input type="text" placeholder="Cantidad" class="form-control input-md">'+
+		                        '<input type="text" placeholder="Resource\'s name" class="form-control input-md initialPriceUpgrade"> '+
+		                        '<input type="text" placeholder="Amount" class="form-control input-md">'+
 		                      '</div>'+
 		                    '</div>';
 			$("#upgradeCosts").append(stringPrice);
@@ -150,7 +151,7 @@ var MANAGER = {};
 	  		if($($(this)).val()[0] == "Apply to all items" ){
 	  			itemName = "Apply to all items"
 	  			itemsTypesHtml = '<div  class="form-group form-group">'+
-	                        '<label class="col-md-4 control-label" for="upgradeTypeSelector">Tipo de upgrade para ' + itemName + '</label>'+
+	                        '<label class="col-md-4 control-label" for="upgradeTypeSelector">Type of upgrade for ' + itemName + '</label>'+
 	                        '<div class="col-md-4">'+
 	                        '<select class="form-control selectUpgradeType" id="upgradeTypeFor'+ itemName +'"" item="' + itemName + '">'+
 	                        	'<option>Select one</option>'+
@@ -158,9 +159,6 @@ var MANAGER = {};
 	                            '<option value="percIncAllRes">'+'Percentage increase production all resources'+'</option>'+
 	                            '<option value="costRedPercOneRes">'+'Cost reduction percentage one resource'+'</option>'+
 	                            '<option value="costRedPercAllRes">'+'Cost reduction percentage all resources'+'</option>'+
-	                            '<option value="delCostType">'+'Delete cost type'+'</option>'+
-	                            '<option value="intOverRes">'+'Interest over a resource'+'</option>'+
-	                            '<option value="bonFromAchievments">'+'Bonus from getting achievments'+'</option>'+
 	                        '</select>'+
 	                        '</div>'+
 	                    '</div>';
@@ -175,7 +173,7 @@ var MANAGER = {};
 
 					//create upgrade type html per item selected
 					itemsTypesHtml = '<div  class="form-group form-group">'+
-	                        '<label class="col-md-4 control-label" for="upgradeTypeSelector">Tipo de upgrade para ' + itemName + '</label>'+
+	                        '<label class="col-md-4 control-label" for="upgradeTypeSelector">Type of upgrade for ' + itemName + '</label>'+
 	                        '<div class="col-md-4">'+
 	                        '<select class="form-control selectUpgradeType" item="' + itemName.replace(/ /g,"_") + '" index="'+ index +'">'+
 	                        	'<option>Select one</option>'+
@@ -186,9 +184,6 @@ var MANAGER = {};
 	                            '<option value="addProdType">'+'Add production type'+'</option>'+
 	                            '<option value="costRedPercOneRes">'+'Cost reduction percentage one resource'+'</option>'+
 	                            '<option value="costRedPercAllRes">'+'Cost reduction percentage all resources'+'</option>'+
-	                            '<option value="delCostType">'+'Delete cost type'+'</option>'+
-	                            '<option value="intOverRes">'+'Interest over a resource'+'</option>'+
-	                            '<option value="bonFromAchievments">'+'Bonus from getting achievments'+'</option>'+
 	                        '</select>'+
 	                        '</div>'+
 	                    '</div>'+
@@ -203,7 +198,7 @@ var MANAGER = {};
 				switch ($(this).val()) {
 					case "sumIncOneRes":
 						//create an input
-					  	createInputs($(this).attr("index"),$(this).attr("item"),["resource","amount"],"inputUpgradeType",["Recurso","Cantidad"]);
+					  	createInputs($(this).attr("index"),$(this).attr("item"),["resource","amount"],"inputUpgradeType",["Resource","Amount"]);
 
 					    break;
 					case "sumIncAllRes":
@@ -317,18 +312,18 @@ var MANAGER = {};
 			
 
 			if(propertyName != "resourcePrice"){
-				tooltip += "Afecta a "+propertyName+"\n";
+				tooltip += "Affects "+propertyName+"\n";
 				if(upgrades[upgradeName][propertyName].type){
-					tooltip+= ", Tipo "+upgrades[upgradeName][propertyName].type
+					tooltip+= ", type "+upgrades[upgradeName][propertyName].type
 				}
 				if(upgrades[upgradeName][propertyName].amount){
-					tooltip+= ", Cantidad "+upgrades[upgradeName][propertyName].amount
+					tooltip+= ", amount "+upgrades[upgradeName][propertyName].amount
 				}
 				if(upgrades[upgradeName][propertyName].resource){
-					tooltip+= ", Recurso "+upgrades[upgradeName][propertyName].resource
+					tooltip+= ", resource "+upgrades[upgradeName][propertyName].resource
 				}
 				if(upgrades[upgradeName][propertyName].Percentage){
-					tooltip+= ", Porcentaje "+upgrades[upgradeName][propertyName].Percentage
+					tooltip+= ", percentage "+upgrades[upgradeName][propertyName].Percentage
 				}
 				if(upgrades[upgradeName][propertyName].Ticks){
 					tooltip+= ", Ticks "+upgrades[upgradeName][propertyName].Ticks
@@ -336,11 +331,11 @@ var MANAGER = {};
 			}
 		}
 		if(upgrades[upgradeName]["resourcePrice"] && temporalVariable){
-				tooltip+= ".\n Coste "+upgradePriceToString(upgrades[upgradeName][propertyName]);
+				tooltip+= ".\n Cost "+upgradePriceToString(upgrades[upgradeName][propertyName]);
 				temporalVariable = false;
 		}
 
-		$("#upgrades").append("<div class='butt' title='"+ tooltip +"' id='upgrade"+ upgradeName +"'>"+html+"</div>");
+		$("#upgrades").append("<div class='butt' title='"+ tooltip +"' id='upgrade"+ upgradeName +"' onclick='buyUpgrade(\""+ upgradeName +"\")'>"+html+"</div>");
 
 
 	}
@@ -436,7 +431,7 @@ var MANAGER = {};
 	function updateResourcesAddForm(){
 		htmlResourcesAddForm = "";
 		for(var propertyName in resources) {
-			htmlResourcesAddForm+= "<label>Agregar " + propertyName + "</label><input id='add" + propertyName + "' /><input type='button' onclick='addResource(\"" + propertyName + "\")' value='aceptar' />";
+			htmlResourcesAddForm+= "<label>Add " + propertyName + "</label><input id='add" + propertyName + "' /><input type='button' onclick='addResource(\"" + propertyName + "\")' value='Accept' />";
 		}
 		$("#formAddResources").html(htmlResourcesAddForm);
 	}
@@ -583,7 +578,7 @@ var MANAGER = {};
 			html+= '<div class="form-group">'+
                       '<label class="col-md-4 control-label">'+ entry +'</label>'+
                       '<div class="col-md-4">'+
-                        '<input type="text" placeholder="Cantidad" class="form-control input-md '+ inputClass +'" id='+ jquerySelector+"-"+entry +'>'+
+                        '<input type="text" placeholder="Amount" class="form-control input-md '+ inputClass +'" id='+ jquerySelector+"-"+entry +'>'+
                       '</div>'+
 		            '</div>';
 		});
