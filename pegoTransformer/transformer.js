@@ -3,4 +3,6 @@ function addPrependToWords(prependText, text) {
   return r;
 }
 
-$("#transformar").val(addPrependToWords("pego", $("#transformar").val()))
+function runTransformation() {
+  $("#transformar").val(addPrependToWords("pego", $("#transformar").val()))
+}
