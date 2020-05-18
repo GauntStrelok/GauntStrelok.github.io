@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <script src="./cartones.js" charset="utf-8"></script>
+  <script src="./main.js" charset="utf-8"></script>
+  <style>
+    #players {
+      overflow: hidden;
+    }
+
+    #players table {
+      margin: 10px;
+      border-collapse: collapse;
+    }
+
+    #players table td {
+      color: red;
+      text-align: center;
+      border: 2px solid black;
+      width: 20px;
+      height: 20px;
+      /* font-size: 50px; */
+    }
+
+    #players table td.empty {
+      background-color: blue
+    }
+
+    #numbers table {
+      margin: 10px;
+      border-collapse: collapse;
+    }
+
+    #numbers td {
+      /* width: 30px;
+      height: 30px; */
+      font-size: 20px;
+      color: black;
+      text-align: center;
+      border: 1px solid black;
+    }
+
+    #numbers td.selected {
+      background-color: green;
+      color: white;
+    }
+
+    td {
+      background-color: lightgoldenrodyellow;
+    }
+
+    .playerContainer {
+      /* display: flex; */
+    }
+
+    .playerForm {
+      display: flex;
+    }
+
+    .playerName {
+      margin: 0;
+      margin-right: 10px;
+    }
+
+    .cartonContainer {
+      display: flex;
+      flex-shrink: 0;
+    }
+
+    .cartonsContainer {
+      display: flex;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+
+    .admin {
+      margin-right: 30px;
+    }
+
+    .formContainer {
+      display: flex;
+    }
+
+    td.marked {
+      background-color: green;
+    }
+
+    body {
+      display: flex;
+      overflow-x: hidden;
+    }
+
+    .cartonInputInformation {
+      color: blue;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .latestNumberContainer {
+      display: flex;
+      justify-content: center;
+    }
+
+    .latestNumber {
+      color: blue;
+      background-color: black;
+      text-align: center;
+      border: 10px solid green;
+      width: 50px;
+    }
+  </style>
+  <title></title>
+</head>
+
+<body>
+  <div id="admin" class="admin">
+    <div class="formContainer">
+      <input type="text" name="addPlayer" id="addPlayerInput" onkeydown="window.bingoPage.keyPressAddPlayer(event)">
+      <button type="button" name="button" onclick="window.bingoPage.addPlayer()">Agregar jugador</button>
+    </div>
+    <div class="formContainer">
+      <button type="button" name="button" onclick="window.bingoPage.getRandomNumber()">Sacar numero</button>
+      <span id="selectedNumbersAmount">Bolillas sacadas: 0</span>
+    </div>
+    <div class="formContainer">
+      <button type="button" name="button" onclick="window.bingoPage.zoomInNumbersTable()">Agrandar numeros</button>
+      <button type="button" name="button" onclick="window.bingoPage.zoomOutNumbersTable()">Achicar numeros</button>
+    </div>
+    <div id="numbers">
+      <table>
+        <tbody>
+          <tr>
+            <td></td>
+            <td class="" style="font-size:20px">1</td>
+            <td class="" style="font-size:20px">2</td>
+            <td class="" style="font-size:20px">3</td>
+            <td class="" style="font-size:20px">4</td>
+            <td class="" style="font-size:20px">5</td>
+            <td class="" style="font-size:20px">6</td>
+            <td class="" style="font-size:20px">7</td>
+            <td class="" style="font-size:20px">8</td>
+            <td class="" style="font-size:20px">9</td>
+          </tr>
+          <tr>
+            <td class="" style="font-size:20px">10</td>
+            <td class="" style="font-size:20px">11</td>
+            <td class="" style="font-size:20px">12</td>
+            <td class="" style="font-size:20px">13</td>
+            <td class="" style="font-size:20px">14</td>
+            <td class="" style="font-size:20px">15</td>
+            <td class="" style="font-size:20px">16</td>
+            <td class="" style="font-size:20px">17</td>
+            <td class="" style="font-size:20px">18</td>
+            <td class="" style="font-size:20px">19</td>
+          </tr>
+          <tr>
+            <td class="" style="font-size:20px">20</td>
+            <td class="" style="font-size:20px">21</td>
+            <td class="" style="font-size:20px">22</td>
+            <td class="" style="font-size:20px">23</td>
+            <td class="" style="font-size:20px">24</td>
+            <td class="" style="font-size:20px">25</td>
+            <td class="" style="font-size:20px">26</td>
+            <td class="" style="font-size:20px">27</td>
+            <td class="" style="font-size:20px">28</td>
+            <td class="" style="font-size:20px">29</td>
+          </tr>
+          <tr>
+            <td class="" style="font-size:20px">30</td>
+            <td class="" style="font-size:20px">31</td>
+            <td class="" style="font-size:20px">32</td>
+            <td class="" style="font-size:20px">33</td>
+            <td class="" style="font-size:20px">34</td>
+            <td class="" style="font-size:20px">35</td>
+            <td class="" style="font-size:20px">36</td>
+            <td class="" style="font-size:20px">37</td>
+            <td class="" style="font-size:20px">38</td>
+            <td class="" style="font-size:20px">39</td>
+          </tr>
+          <tr>
+            <td class="" style="font-size:20px">40</td>
+            <td class="" style="font-size:20px">41</td>
+            <td class="" style="font-size:20px">42</td>
+            <td class="" style="font-size:20px">43</td>
+            <td class="" style="font-size:20px">44</td>
+            <td class="" style="font-size:20px">45</td>
+            <td class="" style="font-size:20px">46</td>
+            <td class="" style="font-size:20px">47</td>
+            <td class="" style="font-size:20px">48</td>
+            <td class="" style="font-size:20px">49</td>
+          </tr>
+          <tr>
+            <td class="" style="font-size:20px">50</td>
+            <td class="" style="font-size:20px">51</td>
+            <td class="" style="font-size:20px">52</td>
+            <td class="" style="font-size:20px">53</td>
+            <td class="" style="font-size:20px">54</td>
+            <td class="" style="font-size:20px">55</td>
+            <td class="" style="font-size:20px">56</td>
+            <td class="" style="font-size:20px">57</td>
+            <td class="" style="font-size:20px">58</td>
+            <td class="" style="font-size:20px">59</td>
+          </tr>
+          <tr>
+            <td class="" style="font-size:20px">60</td>
+            <td class="" style="font-size:20px">61</td>
+            <td class="" style="font-size:20px">62</td>
+            <td class="" style="font-size:20px">63</td>
+            <td class="" style="font-size:20px">64</td>
+            <td class="" style="font-size:20px">65</td>
+            <td class="" style="font-size:20px">66</td>
+            <td class="" style="font-size:20px">67</td>
+            <td class="" style="font-size:20px">68</td>
+            <td class="" style="font-size:20px">69</td>
+          </tr>
+          <tr>
+            <td class="" style="font-size:20px">70</td>
+            <td class="" style="font-size:20px">71</td>
+            <td class="" style="font-size:20px">72</td>
+            <td class="" style="font-size:20px">73</td>
+            <td class="" style="font-size:20px">74</td>
+            <td class="" style="font-size:20px">75</td>
+            <td class="" style="font-size:20px">76</td>
+            <td class="" style="font-size:20px">77</td>
+            <td class="" style="font-size:20px">78</td>
+            <td class="" style="font-size:20px">79</td>
+          </tr>
+          <tr>
+            <td class="" style="font-size:20px">80</td>
+            <td class="" style="font-size:20px">81</td>
+            <td class="" style="font-size:20px">82</td>
+            <td class="" style="font-size:20px">83</td>
+            <td class="" style="font-size:20px">84</td>
+            <td class="" style="font-size:20px">85</td>
+            <td class="" style="font-size:20px">86</td>
+            <td class="" style="font-size:20px">87</td>
+            <td class="" style="font-size:20px">88</td>
+            <td class="" style="font-size:20px">89</td>
+          </tr>
+          <tr>
+            <td class="" style="font-size:20px">90</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div id="players">
+
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <script src="./cartones.js" charset="utf-8"></script>
+  <script src="./cartonMarker.js" charset="utf-8"></script>
+  <link rel="stylesheet" href="./carton.css">
+  <style>
+    .cartonContainer {
+      float: left;
+      margin-right: 50px;
+    }
+
+    #cartones table td {
+      width: 50px;
+      height: 50px;
+      font-size: 45px;
+      position: relative;
+    }
+
+    .marked {
+      background-color: orange;
+    }
+
+    .marked .marcador {
+      display: block;
+    }
+
+    .marcador {
+      display: none;
+      position: absolute;
+      color: purple;
+      left: 0;
+      top: 0;
+    }
+  </style>
+  <title>Generador de carton/es</title>
+</head>
+
+<body>
+  Ingrese dos numeros separados por coma para ingresar un rango, por ejemplo, si ingresa 1,5 se van a ver los cartones 1,2,3,4 y 5.
+  <label for="">Ingrese numero de carton</label><input type="text" name="" id="cartonesToCreate">
+  <button type="button" name="button" onclick="showCartones()">mostrar</button>
+  <div id="cartones">
+
+  </div>
+</body>
+
+</html>

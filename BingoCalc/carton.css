@@ -1,0 +1,17 @@
+#cartones table {
+  margin-top: 10px;
+  border-collapse: collapse;
+}
+
+#cartones table td {
+  width: 60px;
+  height: 60px;
+  color: red;
+  text-align: center;
+  font-size: 50px;
+  border: 2px solid black;
+}
+
+#cartones table td.empty {
+  background-color: blue
+}
