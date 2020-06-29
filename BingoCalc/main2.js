@@ -130,7 +130,7 @@ class BingoAdmin {
   }
 
   resetBingo() {
-    this.availableNumbers = allNumbers;
+    this.availableNumbers = [...allNumbers];
     this.selectedNumbers = [];
     this.players.forEach((player) => {
       player.reset();
